@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import BlackButton from '../button/BlackButton'
 
-const InputSection3 = ({ heading, setTab }) => {
+const InputURL = ({ heading, setTab }) => {
   const nextSection = () => {
-    setTab(1)
+    setTab(2)
   }
 
   return (
@@ -40,6 +40,7 @@ const InputSection3 = ({ heading, setTab }) => {
                 ></input>
               </div>
             </div>
+
             <div className="flex justify-center w-full">
               <div className="form-control">
                 <label className="label cursor-pointer">
@@ -49,7 +50,6 @@ const InputSection3 = ({ heading, setTab }) => {
                   </span>
                   <input
                     type="checkbox"
-                    defaultChecked
                     className="checkbox mx-4 checkbox-accent"
                   />
                 </label>
@@ -71,4 +71,4 @@ const InputSection3 = ({ heading, setTab }) => {
   )
 }
 
-export default InputSection3
+export default InputURL

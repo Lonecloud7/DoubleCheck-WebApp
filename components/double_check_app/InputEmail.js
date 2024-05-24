@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import BlackButton from '../button/BlackButton'
 
-const InputSection1 = ({ heading, setTab }) => {
+const InputEmail = ({ heading, setTab }) => {
   const nextSection = () => {
-    setTab(2)
+    setTab(3)
   }
 
   return (
@@ -40,7 +40,6 @@ const InputSection1 = ({ heading, setTab }) => {
                 ></input>
               </div>
             </div>
-
             <div className="flex justify-center w-full">
               <div className="form-control">
                 <label className="label cursor-pointer">
@@ -71,4 +70,4 @@ const InputSection1 = ({ heading, setTab }) => {
   )
 }
 
-export default InputSection1
+export default InputEmail

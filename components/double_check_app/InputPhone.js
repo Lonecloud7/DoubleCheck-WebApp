@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import BlackButton from '../button/BlackButton'
 
-const InputSection2 = ({ heading, setTab }) => {
+const InputPhone = ({ heading, setTab }) => {
   const nextSection = () => {
-    setTab(3)
+    setTab(1)
   }
 
   return (
@@ -49,6 +49,7 @@ const InputSection2 = ({ heading, setTab }) => {
                   </span>
                   <input
                     type="checkbox"
+                    defaultChecked
                     className="checkbox mx-4 checkbox-accent"
                   />
                 </label>
@@ -70,4 +71,4 @@ const InputSection2 = ({ heading, setTab }) => {
   )
 }
 
-export default InputSection2
+export default InputPhone

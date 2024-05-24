@@ -10,24 +10,14 @@ import { getTokenrFromLocalCookie } from '@/lib/auth'
 import { useFetchUser } from '@/lib/authContext'
 import Cookies from 'js-cookie'
 
-import InputSection1 from './InputSection'
-import InputSection2 from './InputSection2'
-import InputSection3 from './InputSection3'
-import InputSection4 from './InputSection3'
+import InputUrl from './InputUrl'
+import InputEmail from './InputEmail'
+import InputPhone from './InputPhone'
+import InputSection4 from './InputPhone'
 
 const DoubleCheck = () => {
   const router = useRouter()
   const [tab, setTab] = useState(1)
-  //   const [numberOfWords, setNumberOfWords] = useState(1)
-  //   const [numberOfLetters, setNumberOfLetters] = useState(3)
-  //   const [category, setCategory] = useState('color')
-
-  //   const [generatedWords, setGeneratedWords] = useState([])
-  //   const [wordsReady, setWordsReady] = useState(false)
-  //   const [poem, setPoem] = useState('')
-  //   const [allWordsUsed, setAllWordsUsed] = useState(false)
-  //   const [editForm, setEditForm] = useState(false)
-  //   const [clicked, setClicked] = useState(false)
 
   return (
     <div className="py-10">
@@ -40,7 +30,7 @@ const DoubleCheck = () => {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -300, opacity: 0 }}
           >
-            <InputSection1 heading={'Enter URL here'} setTab={setTab} />
+            <InputUrl heading={'Enter URL here'} setTab={setTab} />
           </motion.div>
         )}
         {tab === 2 && (
@@ -50,7 +40,7 @@ const DoubleCheck = () => {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -300, opacity: 0 }}
           >
-           <InputSection2 heading={'Enter Email here'} setTab={setTab} />
+           <InputEmail heading={'Enter Email here'} setTab={setTab} />
           </motion.div>
         )}
         {tab === 3 && (
@@ -60,12 +50,12 @@ const DoubleCheck = () => {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -300, opacity: 0 }}
           >
-            <InputSection3 heading={'Enter Phone Number here'} setTab={setTab} />
+            <InputPhone heading={'Enter Phone Number here'} setTab={setTab} />
           </motion.div>
         )}
         {tab === 4 && (
           <motion.div
-            key="3"
+            key="4"
             initial={{ x: 300, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -300, opacity: 0 }}
