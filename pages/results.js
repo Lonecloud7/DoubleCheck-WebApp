@@ -4,8 +4,19 @@ import Link from 'next/link'
 import { CircularProgress } from '@mui/material'
 import CommunityPoems from '@/components/poems/CommunityPoems'
 import { AnimatePresence, motion } from 'framer-motion'
+import ResultValue from '@/components/double_check_app/ResultValue'
+import ResultOutput from '@/components/double_check_app/ResultOutput'
+
+
 
 export default function Results() {
+  const [showResult, setShowResult] = useState(false)
+
+  setTimeout(() => {
+    setShowResult(true)
+  }, 5000)
+
+
   return (
     <MainLayout title="Community forum" showHeader={true} showFooter={true}>
       <motion.div
@@ -60,85 +71,17 @@ export default function Results() {
 
               <div className="px-2 pb-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 ">
                 <div className="flex flex-wrap justify-center text-center -m-2 gap-1 md:gap-4">
-                  <div className="  items-center p-2 flex flex-col">
-                    {true ? (
-                      <div>
-                        <h3 className="md:text-3xl">53%</h3>
-                        <span className="text-base text-white md:text-lg">
-                          Lorem ipsum dolor
-                        </span>
-                      </div>
-                    ) : (
-                      <>
-                        <CircularProgress className="text-white" />
-                        <h4 className="mt-2 text-indigo-100 font-lg">
-                          Getting results ...
-                        </h4>
-                      </>
-                    )}
-                  </div>
-                  <div className="  items-center p-2 flex flex-col">
-                    {true ? (
-                      <div>
-                        <h3 className="md:text-3xl">53%</h3>
-                        <span className="text-base text-white md:text-lg">
-                          Lorem ipsum dolor
-                        </span>
-                      </div>
-                    ) : (
-                      <>
-                        <CircularProgress className="text-white" />
-                        <h4 className="mt-2 text-indigo-100 font-lg">
-                          Getting results ...
-                        </h4>
-                      </>
-                    )}
-                  </div>
-                  <div className="  items-center p-2 flex flex-col">
-                    {true ? (
-                      <div>
-                        <h3 className="md:text-3xl">53%</h3>
-                        <span className="text-base text-white md:text-lg">
-                          Lorem ipsum dolor
-                        </span>
-                      </div>
-                    ) : (
-                      <>
-                        <CircularProgress className="text-white" />
-                        <h4 className="mt-2 text-indigo-100 font-lg">
-                          Getting results ...
-                        </h4>
-                      </>
-                    )}
-                  </div>
+                  <ResultValue showResult={showResult} percentage={"83"}/>
+                  <ResultValue showResult={showResult} percentage={"20"}/>
+                  <ResultValue showResult={showResult} percentage={"53"}/>
                 </div>
               </div>
               <>
                 {/* <div className="h-full w-full flex flex-col justify-center items-center"> */}
                 <div className="h-full w-full">
-                  <div className="bg-white rounded-lg shadow-sm overflow-hidden w-full mt-3">
-                    <div className="flex items-center justify-between px-4 py-2 bg-gray-100">
-                      <div className="flex items-center">
-                        <div className="rounded-full bg-indigo-600 w-8 h-8 flex items-center justify-center">
-                          <p className="text-white font-bold">B</p>
-                        </div>
-                        <p className="ml-2 font-bold text-gray-800">Test1</p>
-                      </div>
-                      <p className="text-gray-600 text-sm">Stuff here</p>
-                    </div>
-                    <div className="px-4 py-3">
-                      <h3 className="text-xl font-bold mb-2">
-                        <React.Fragment>STUFF HERE</React.Fragment>
-                      </h3>
-                      <p className="text-gray-800 text-sm">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Possimus itaque maiores cupiditate aut illum voluptatum
-                        commodi ipsam. Voluptate, excepturi dolore. Eveniet,
-                        perferendis quos earum deleniti iure inventore dolor
-                        exercitationem? Quasi!
-                      </p>
-                    </div>
-                  </div>
+                  <ResultOutput color={"bg-green-500"}/>
+                  <ResultOutput color={"bg-error"}/>
+                  
                 </div>
               </>
             </div>

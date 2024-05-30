@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import DiceRoll from '../game/DiceRoll'
-import CreatePoem from '../game/CreatePoem'
-import GeneratedWords from '../personalized_square/GeneratedWords'
-import SelectSection from '../personalized_square/SelectSection'
+
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { getTokenrFromLocalCookie } from '@/lib/auth'
@@ -13,7 +10,6 @@ import Cookies from 'js-cookie'
 import InputUrl from './InputUrl'
 import InputEmail from './InputEmail'
 import InputPhone from './InputPhone'
-import InputSection4 from './InputPhone'
 
 const DoubleCheck = () => {
   const router = useRouter()
@@ -51,16 +47,6 @@ const DoubleCheck = () => {
             exit={{ x: -300, opacity: 0 }}
           >
             <InputPhone heading={'Enter Phone Number here'} setTab={setTab} />
-          </motion.div>
-        )}
-        {tab === 4 && (
-          <motion.div
-            key="4"
-            initial={{ x: 300, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: -300, opacity: 0 }}
-          >
-            <InputSection4 heading={'ChatGPT Recommendations'} setTab={setTab} />
           </motion.div>
         )}
       </AnimatePresence>

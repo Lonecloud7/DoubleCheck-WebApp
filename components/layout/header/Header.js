@@ -33,7 +33,10 @@ function Header() {
           <Link href="/results" className="mr-5 hover:text-gray-900">
            Results
           </Link>
-          <Link href="/" className="mr-5 hover:text-gray-900">
+          <Link href="/chatbot-page" className="mr-5 hover:text-gray-900">
+           ChatBot
+          </Link>
+          {/* <Link href="/" className="mr-5 hover:text-gray-900">
            Terms and Services
           </Link>
           <Link href="/" className="mr-5 hover:text-gray-900">
@@ -55,7 +58,7 @@ function Header() {
             >
               Poems by You
             </Link>
-          )}
+          )} */}
         </nav>
         {/* {user ? (
           <div>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import BlackButton from '../button/BlackButton'
+import Link from 'next/link'
 
 const InputPhone = ({ heading, setTab }) => {
   const nextSection = () => {
@@ -58,10 +59,12 @@ const InputPhone = ({ heading, setTab }) => {
 
             <div className="flex justify-center mt-4 mx-auto ">
               <div className="ml-8">
-                <BlackButton
-                  text={'Start Scan'}
-                  onClick={() => nextSection()}
-                />
+                <Link Link href="/results">
+                  <BlackButton
+                    text={'Start Scan'}
+                    // onClick={() => nextSection()}
+                  />
+                </Link>
               </div>
             </div>
           </div>
