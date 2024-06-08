@@ -1,9 +1,52 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import BlackButton from '../button/BlackButton'
+import axios from 'axios'
 
 const InputEmail = ({ heading, setTab }) => {
+  const [email, setEmail] = useState('')
+  const [stuff, setStuff] = useState([])
   const nextSection = () => {
     setTab(3)
+    // getEmailResult()
+  }
+
+  const handleChange = (e) => {
+    setEmail(e.target.value)
+  }
+
+  const options = {
+    method: 'GET',
+    url: 'https://email-data-leak-checker.p.rapidapi.com/emaild',
+    params: {
+      email: `${email}`
+    },
+    headers: {
+      'x-rapidapi-key': '14c0af8c32msh0eebc5d5107d4e5p11800ajsn2c9a945e431c',
+      'x-rapidapi-host': 'email-data-leak-checker.p.rapidapi.com',
+      'Content-Type': 'application/json',
+      'User-Agent': 'application-name'
+    }
+  };
+
+  // try {
+  // 	const response = await axios.request(options);
+  // 	console.log(response.data);
+  // } catch (error) {
+  // 	console.error(error);
+  // }
+
+  const getEmailResult = async () => {
+    try {
+      const { data } = await axios.request(options)
+      if (data) {
+        console.log('EMAIL DATA HERE', data)
+        setEmail("")
+        setStuff(data)
+
+      } else {
+        alert('Failed to Get Results!')
+      }
+    } catch (err) {}
   }
 
   return (
@@ -29,9 +72,9 @@ const InputEmail = ({ heading, setTab }) => {
                   onChange={(e) => {
                     handleChange(e)
                   }}
-                  id="message"
-                  name="message"
-                  value={''}
+                  id="email"
+                  name="email"
+                  value={email}
                   className={`w-full ${
                     false
                       ? 'bg-red-100 border-red-300 focus:border-red-500 focus:bg-red focus:ring-red-200'
@@ -63,6 +106,7 @@ const InputEmail = ({ heading, setTab }) => {
                 />
               </div>
             </div>
+            {stuff}
           </div>
         </div>
       </div>

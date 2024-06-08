@@ -1,9 +1,150 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { CircularProgress } from '@mui/material'
 import BlackButton from '../button/BlackButton'
+import axios from 'axios'
 
-const InputURL = ({ heading, setTab }) => {
+const InputURL = ({ heading, setTab, setUrlResults, urlResults }) => {
+  const [url, setUrl] = useState('')
+  const [loading, setLoading] = useState(false)
+
   const nextSection = () => {
     setTab(2)
+    // getUrlResult()
+  }
+
+  const handleChange = (e) => {
+    setUrl(e.target.value)
+  }
+
+  // HTTP HEADER CALL
+  const optionsHttpHeader = {
+    method: 'POST',
+    url:
+      'https://active-cyber-defence-tools.p.rapidapi.com/api/capabilities/httpheaders/execute',
+    headers: {
+      'x-rapidapi-key': '14c0af8c32msh0eebc5d5107d4e5p11800ajsn2c9a945e431c',
+      'x-rapidapi-host': 'active-cyber-defence-tools.p.rapidapi.com',
+      'Content-Type': 'application/json',
+    },
+    data: {
+      prompt: `https://${url}`,
+      options: {},
+      config: {
+        crawl_target: true,
+        delay_sec: 0.1,
+        disable_cache: false,
+        https_target: true,
+        threads: 5,
+        timeout_sec: 120,
+        verify_https: false,
+      },
+    },
+  }
+
+  const optionsWebSpider = {
+    method: 'POST',
+    url:
+      'https://active-cyber-defence-tools.p.rapidapi.com/api/capabilities/webspider/execute',
+    headers: {
+      'x-rapidapi-key': '14c0af8c32msh0eebc5d5107d4e5p11800ajsn2c9a945e431c',
+      'x-rapidapi-host': 'active-cyber-defence-tools.p.rapidapi.com',
+      'Content-Type': 'application/json',
+    },
+    data: {
+      prompt: `https://${url}`,
+      options: {
+        whitelist_www: 'true',
+      },
+      config: {
+        timeout_sec: 120,
+        delay_sec: 0.1,
+        threads: 5,
+        prefer_https: true,
+        verify_https: false,
+        disable_cache: false,
+        crawl_target: true,
+      },
+    },
+  }
+
+  const optionsPortScan = {
+    method: 'POST',
+    url:
+      'https://active-cyber-defence-tools.p.rapidapi.com/api/capabilities/portscan/execute',
+    headers: {
+      'x-rapidapi-key': '14c0af8c32msh0eebc5d5107d4e5p11800ajsn2c9a945e431c',
+      'x-rapidapi-host': 'active-cyber-defence-tools.p.rapidapi.com',
+      'Content-Type': 'application/json',
+    },
+    data: {
+      prompt: `https://${url}`,
+      options: {
+        scan_type: 'stealth',
+      },
+      config: {
+        timeout_sec: 120,
+        delay_sec: 0.1,
+        threads: 5,
+        prefer_https: true,
+        verify_https: false,
+        disable_cache: false,
+        crawl_target: true,
+      },
+    },
+  }
+  const optionsSslScan = {
+    method: 'POST',
+    url:
+      'https://active-cyber-defence-tools.p.rapidapi.com/api/capabilities/x509/execute',
+    headers: {
+      'x-rapidapi-key': '14c0af8c32msh0eebc5d5107d4e5p11800ajsn2c9a945e431c',
+      'x-rapidapi-host': 'active-cyber-defence-tools.p.rapidapi.com',
+      'Content-Type': 'application/json',
+    },
+    data: {
+      prompt: `https://${url}`,
+      options: {},
+      config: {
+        timeout_sec: 120,
+        delay_sec: 0.1,
+        threads: 5,
+        prefer_https: true,
+        verify_https: false,
+        disable_cache: false,
+        crawl_target: true,
+      },
+    },
+  }
+
+  const getUrlResult = async () => {
+    try {
+      setLoading(true)
+      const { data: dataHttp } = await axios.request(optionsHttpHeader)
+      const { data: dataWebSpider } = await axios.request(optionsWebSpider)
+      const { data: dataPort } = await axios.request(optionsPortScan)
+      const { data: dataSsl } = await axios.request(optionsSslScan)
+
+      if (dataHttp && dataWebSpider && dataPort && dataSsl) {
+        const httpResponse = dataHttp.results.optional
+        const sslResponse = dataSsl.results.certs[0]
+        const dataWebResponse = dataWebSpider.results
+        const portResponse = dataPort.results.hosts[0]
+
+        console.log('HTTP RESULTS>>>', httpResponse)
+        console.log('SSL RESULTS>>>', sslResponse)
+        console.log('WEB CRAWL>>>>', dataWebResponse)
+        console.log('PORT RESPONSE>>>>', portResponse)
+
+        setUrlResults([httpResponse, sslResponse, dataWebResponse, portResponse]);
+
+        setUrl('')
+
+        setLoading(false)
+      } else {
+        alert('Failed to Get Results!')
+        setLoading(false)
+      }
+    } catch (err) {}
   }
 
   return (
@@ -29,9 +170,9 @@ const InputURL = ({ heading, setTab }) => {
                   onChange={(e) => {
                     handleChange(e)
                   }}
-                  id="message"
-                  name="message"
-                  value={''}
+                  id="url"
+                  name="url"
+                  value={url}
                   className={`w-full ${
                     false
                       ? 'bg-red-100 border-red-300 focus:border-red-500 focus:bg-red focus:ring-red-200'
@@ -64,6 +205,16 @@ const InputURL = ({ heading, setTab }) => {
                 />
               </div>
             </div>
+            {loading ? (
+              <>
+                <CircularProgress className="text-white" />
+                <h4 className="mt-2 text-indigo-100 font-lg">
+                  Getting results ...
+                </h4>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>

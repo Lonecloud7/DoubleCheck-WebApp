@@ -1,19 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 
-import axios from 'axios'
+// import axios from 'axios'
 import { useRouter } from 'next/router'
-import { getTokenrFromLocalCookie } from '@/lib/auth'
-import { useFetchUser } from '@/lib/authContext'
-import Cookies from 'js-cookie'
+// import { getTokenrFromLocalCookie } from '@/lib/auth'
+// import { useFetchUser } from '@/lib/authContext'
+// import Cookies from 'js-cookie'
 
 import InputUrl from './InputUrl'
 import InputEmail from './InputEmail'
 import InputPhone from './InputPhone'
+import Results from './Results'
 
 const DoubleCheck = () => {
-  const router = useRouter()
-  const [tab, setTab] = useState(1)
+  // const router = useRouter()
+  const [tab, setTab] = useState(3)
+  const [urlResults, setUrlResults] = useState([])
 
   return (
     <div className="py-10">
@@ -26,7 +28,19 @@ const DoubleCheck = () => {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -300, opacity: 0 }}
           >
-            <InputUrl heading={'Enter URL here'} setTab={setTab} />
+            <InputUrl
+              heading={'Enter URL here'}
+              setTab={setTab}
+              setUrlResults={setUrlResults}
+              urlResults={urlResults}
+            />
+            <ul>
+              {urlResults.map((result, index) => (
+                <li key={index}>
+                  <pre>{JSON.stringify(result, null, 2)}</pre>
+                </li>
+              ))}
+            </ul>
           </motion.div>
         )}
         {tab === 2 && (
@@ -36,7 +50,7 @@ const DoubleCheck = () => {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -300, opacity: 0 }}
           >
-           <InputEmail heading={'Enter Email here'} setTab={setTab} />
+            <InputEmail heading={'Enter Email here'} setTab={setTab} />
           </motion.div>
         )}
         {tab === 3 && (
@@ -47,6 +61,16 @@ const DoubleCheck = () => {
             exit={{ x: -300, opacity: 0 }}
           >
             <InputPhone heading={'Enter Phone Number here'} setTab={setTab} />
+          </motion.div>
+        )}
+        {tab === 4 && (
+          <motion.div
+            key="4"
+            initial={{ x: 300, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -300, opacity: 0 }}
+          >
+            <Results />
           </motion.div>
         )}
       </AnimatePresence>

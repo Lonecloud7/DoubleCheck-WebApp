@@ -1,12 +1,54 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import BlackButton from '../button/BlackButton'
+import { CircularProgress } from '@mui/material'
 import Link from 'next/link'
+import Image from 'next/image'
+import axios from 'axios'
 
 const InputPhone = ({ heading, setTab }) => {
+  const [phone, setPhone] = useState('')
+  const [phoneResult, setPhoneResult] = useState(null)
+  const [loading, setLoading] = useState(false)
+
   const nextSection = () => {
-    setTab(1)
+    // setTab(4)
+    getPhoneResult()
   }
 
+  const handleChange = (e) => {
+    setPhone(e.target.value)
+  }
+
+  const options = {
+    method: 'GET',
+    url: 'https://whatsapp-osint.p.rapidapi.com/wspic/dck',
+    params: {
+      phone: `${phone}`,
+    },
+    headers: {
+      'x-rapidapi-key': '14c0af8c32msh0eebc5d5107d4e5p11800ajsn2c9a945e431c',
+      'x-rapidapi-host': 'whatsapp-osint.p.rapidapi.com',
+    },
+  }
+
+  const getPhoneResult = async () => {
+    try {
+      setLoading(true)
+      const { data } = await axios.request(options)
+      if (data) {
+        console.log('PHONE DATA HERE>>>>>x', data)
+
+        setPhoneResult([data])
+        setPhone('')
+        setLoading(false)
+      } else {
+        setLoading(false)
+        alert('Failed to Get Results!')
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
   return (
     <div>
       <div className="container px-5 pt-5 pb-10 mx-auto">
@@ -30,9 +72,9 @@ const InputPhone = ({ heading, setTab }) => {
                   onChange={(e) => {
                     handleChange(e)
                   }}
-                  id="message"
-                  name="message"
-                  value={''}
+                  id="phone"
+                  name="phone"
+                  value={phone}
                   className={`w-full ${
                     false
                       ? 'bg-red-100 border-red-300 focus:border-red-500 focus:bg-red focus:ring-red-200'
@@ -59,14 +101,37 @@ const InputPhone = ({ heading, setTab }) => {
 
             <div className="flex justify-center mt-4 mx-auto ">
               <div className="ml-8">
-                <Link Link href="/results">
-                  <BlackButton
-                    text={'Start Scan'}
-                    // onClick={() => nextSection()}
-                  />
-                </Link>
+                {/* <Link Link href="/results"> */}
+                <BlackButton
+                  text={'Start Scan'}
+                  onClick={() => nextSection()}
+                />
+                {/* </Link> */}
               </div>
             </div>
+            {loading ? (
+              <>
+                <CircularProgress className="text-white" />
+                <h4 className="mt-2 text-indigo-100 font-lg">
+                  Getting results ...
+                </h4>
+              </>
+            ) : (
+              <></>
+            )}
+            {phoneResult && (
+              <ul>
+                {phoneResult.map((result, index) => (
+                  <li key={index}>
+                    {/* <pre>{JSON.stringify(result, null, 2)}</pre> */}
+                    <img
+                      src="https://pps.whatsapp.net/v/t61.24694-24/438417446_355380894211976_3200717348354125310_n.jpg?ccb=11-4&oh=01_Q5AaIGvu6ZjbvKxk13OlOD0-he3nTSuxJlLmwPYVeEBggddd&oe=6670F2B5&_nc_sid=e6ed6c&_nc_cat=108"
+                      alt=""
+                    />
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       </div>

@@ -4,10 +4,20 @@ const withPWA = require('next-pwa')({
   register: true,
   skipWaiting: true,
   disable: process.env.NODE_ENV === 'development',
-});
+})
 
 const nextConfig = withPWA({
   reactStrictMode: true,
-});
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'pps.whatsapp.net',
+        port: '',
+        pathname: '',
+      },
+    ],
+  },
+})
 
-module.exports = nextConfig;
+module.exports = nextConfig

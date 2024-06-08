@@ -1,0 +1,42 @@
+{message: 'Public dataleak on it', results: Array(3), status: 'ok'}
+message
+: 
+"Public dataleak on it"
+results
+: 
+Array(3)
+0
+: 
+{address: 'Nigeria', database_name: 'konga', email: 'okeke.dumaga@yahoo.com', hashed_password: '', id: '21190910201', …}
+1
+: 
+{address: '', database_name: 'Tunngle.net', email: 'okeke.dumaga@yahoo.com', hashed_password: 'ab20675acd547f3af5ca18bd152d5fcb:A.Y{2', id: '22429215134', …}
+2
+: 
+{address: '41.203.88.139', database_name: 'R2Games', email: 'okeke.dumaga@yahoo.com', hashed_password: '564319a2d885cfac049eddaecb5f86d2:f9iBXm', id: '7632222324', …}
+length
+: 
+3
+[[Prototype]]
+: 
+Array(0)
+status
+: 
+"ok"
+[[Prototype]]
+: 
+Object
+
+data.message - leaked?
+data.results - array of results
+results.map(result > result.result)
+
+
+
+
+
+
+
+
+
+
