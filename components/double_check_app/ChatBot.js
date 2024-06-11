@@ -5,7 +5,65 @@ import MainLayout from '@/components/layout/MainLayout'
 import SecondaryButton from '../button/SecondaryButton'
 import BlackButton from '../button/BlackButton'
 
+import { CircularProgress } from '@mui/material'
+
+import axios from 'axios'
+
 const ChatBot = ({ heading, setTab }) => {
+  // const [phone, setPhone] = useState('')
+  const [chatgtpResult, setChatgtpResult] = useState(null)
+  const [loading, setLoading] = useState(false)
+
+  const nextSection = () => {
+    // setTab(4)
+    getChatGpt()
+  }
+
+  const options = {
+    method: 'POST',
+    url:
+      'https://active-cyber-defence-tools.p.rapidapi.com/api/capabilities/chatgpt/execute',
+    headers: {
+      'x-rapidapi-key': '14c0af8c32msh0eebc5d5107d4e5p11800ajsn2c9a945e431c',
+      'x-rapidapi-host': 'active-cyber-defence-tools.p.rapidapi.com',
+      'Content-Type': 'application/json',
+    },
+    data: {
+      config: {
+        crawl_target: true,
+        delay_sec: 0.1,
+        disable_cache: false,
+        https_target: true,
+        threads: 5,
+        timeout_sec: 120,
+        verify_https: false,
+      },
+      options: {
+        model_selection: 'gpt-4',
+      },
+      prompt: `this is the response from a http header scan of a website, any possible flaws in the response that could be vulnerable and fixed? this is for pentesting.`,
+    },
+  }
+
+  const getChatGpt = async () => {
+    try {
+      setLoading(true)
+      const { data } = await axios.request(options)
+      if (data) {
+        console.log('GPT DATA HERE>>>>>x', data)
+
+        setChatgtpResult(data.results)
+
+        setLoading(false)
+      } else {
+        setLoading(false)
+        alert('Failed to Get Results!')
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <MainLayout title="How to play" showHeader={true} showFooter={true}>
       <div className="" style={{ flex: '1 1 auto' }}>
@@ -37,43 +95,32 @@ const ChatBot = ({ heading, setTab }) => {
                         height="24"
                       />
                     </svg>
-                    <span className="relative">Unleash</span>
+                    <span className="relative">Hey!</span>
                   </span>{' '}
-                  your inner poet and roll the dice!
+                  Here are some recommendations to help improve the security on
+                  your website!
                 </h2>
+
                 <p className="text-base text-indigo-100 md:text-lg">
-                  Are you up for the challenge?
-                  <br />
-                  Get ready to ignite your creativity and challenge yourself to
-                  a game of poetic prowess! Choose your words, category, and
-                  roll the dice to generate your unique set of randomized words.
-                  With only 20 minutes on the clock, can you craft a poem that
-                  will leave your opponents in awe? Join the fun and show off
-                  your poetic skills today!
+                  {chatgtpResult && chatgtpResult.response}
                 </p>
               </div>
 
+              {loading ? (
+                <>
+                  <CircularProgress className="text-white" />
+                  <h4 className="mt-2 text-indigo-100 font-lg">
+                    Getting recommendations ...
+                  </h4>
+                </>
+              ) : (
+                <></>
+              )}
+
               <div className="w-100 flex flex-col gap-8 items-center">
-                <BlackButton
-                  text="Public Square - open at 00:00am"
-                  onClick={() => router.push('/')}
-                />
+                <BlackButton text="Response" onClick={() => nextSection()} />
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div className="hero min-h-screen bg-base-200">
-        <div className="hero-content flex-col lg:flex-row-reverse">
-          
-          <div>
-            <h1 className="text-5xl font-bold">Box Office News!</h1>
-            <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
-            </p>
-            <button className="btn btn-primary">Get Started</button>
           </div>
         </div>
       </div>

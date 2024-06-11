@@ -3,13 +3,20 @@ import { CircularProgress } from '@mui/material'
 import BlackButton from '../button/BlackButton'
 import axios from 'axios'
 
-const InputURL = ({ heading, setTab, setUrlResults, urlResults }) => {
+const InputURL = ({
+  heading,
+  setTab,
+  setUrlResults,
+  urlResults,
+  loading,
+  setLoading,
+}) => {
   const [url, setUrl] = useState('')
-  const [loading, setLoading] = useState(false)
 
   const nextSection = () => {
-    setTab(2)
-    // getUrlResult()
+    // setTab(2)
+
+    getUrlResult()
   }
 
   const handleChange = (e) => {
@@ -127,17 +134,20 @@ const InputURL = ({ heading, setTab, setUrlResults, urlResults }) => {
       if (dataHttp && dataWebSpider && dataPort && dataSsl) {
         const httpResponse = dataHttp.results.optional
         const sslResponse = dataSsl.results.certs[0]
-        const dataWebResponse = dataWebSpider.results
+        const WebCrawlResponse = dataWebSpider.results
         const portResponse = dataPort.results.hosts[0]
 
-        console.log('HTTP RESULTS>>>', httpResponse)
-        console.log('SSL RESULTS>>>', sslResponse)
-        console.log('WEB CRAWL>>>>', dataWebResponse)
-        console.log('PORT RESPONSE>>>>', portResponse)
+        setUrlResults({
+          httpResponse,
+          sslResponse,
+          portResponse,
+          WebCrawlResponse,
+        }),
+          console.log('URL RESULTS HERE!!!>>>>', urlResults)
 
-        setUrlResults([httpResponse, sslResponse, dataWebResponse, portResponse]);
+        // setUrl('')
 
-        setUrl('')
+        setTab(2)
 
         setLoading(false)
       } else {
@@ -197,24 +207,22 @@ const InputURL = ({ heading, setTab, setUrlResults, urlResults }) => {
               </div>
             </div>
 
-            <div className="flex justify-center mt-4 mx-auto ">
-              <div className="ml-8">
+            <div className="flex flex-wrap justify-center text-center -m-2 gap-1 md:gap-4">
+              {/* <BlackButton text="Back" onClick={() => setTab(1)} /> */}
+              {loading ? (
+                <>
+                  <CircularProgress className="text-white" />
+                  <h4 className="mt-2 text-indigo-100 font-lg">
+                    Getting results ...
+                  </h4>
+                </>
+              ) : (
                 <BlackButton
                   text={'Start Scan'}
                   onClick={() => nextSection()}
                 />
-              </div>
+              )}
             </div>
-            {loading ? (
-              <>
-                <CircularProgress className="text-white" />
-                <h4 className="mt-2 text-indigo-100 font-lg">
-                  Getting results ...
-                </h4>
-              </>
-            ) : (
-              <></>
-            )}
           </div>
         </div>
       </div>

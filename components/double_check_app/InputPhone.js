@@ -5,10 +5,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import axios from 'axios'
 
-const InputPhone = ({ heading, setTab }) => {
+const InputPhone = ({
+  heading,
+  setTab,
+  phoneResult,
+  setPhoneResult,
+  setLoading,
+  loading,
+}) => {
   const [phone, setPhone] = useState('')
-  const [phoneResult, setPhoneResult] = useState(null)
-  const [loading, setLoading] = useState(false)
 
   const nextSection = () => {
     // setTab(4)
@@ -39,7 +44,8 @@ const InputPhone = ({ heading, setTab }) => {
         console.log('PHONE DATA HERE>>>>>x', data)
 
         setPhoneResult([data])
-        setPhone('')
+        setTab(4)
+        // setPhone('')
         setLoading(false)
       } else {
         setLoading(false)
@@ -47,6 +53,7 @@ const InputPhone = ({ heading, setTab }) => {
       }
     } catch (err) {
       console.log(err)
+      setLoading(false)
     }
   }
   return (
@@ -92,46 +99,45 @@ const InputPhone = ({ heading, setTab }) => {
                   </span>
                   <input
                     type="checkbox"
-                    defaultChecked
                     className="checkbox mx-4 checkbox-accent"
                   />
                 </label>
               </div>
             </div>
 
-            <div className="flex justify-center mt-4 mx-auto ">
-              <div className="ml-8">
-                {/* <Link Link href="/results"> */}
+            <div className="flex flex-wrap justify-center text-center -m-2 gap-1 md:gap-4">
+              <BlackButton text="Back" onClick={() => setTab(2)} />
+              {loading ? (
+                <>
+                  <CircularProgress className="text-white" />
+                  <h4 className="mt-2 text-indigo-100 font-lg">
+                    Getting results ...
+                  </h4>
+                </>
+              ) : (
                 <BlackButton
-                  text={'Start Scan'}
+                  text={'Get Results'}
                   onClick={() => nextSection()}
                 />
-                {/* </Link> */}
-              </div>
+              )}
             </div>
-            {loading ? (
-              <>
-                <CircularProgress className="text-white" />
-                <h4 className="mt-2 text-indigo-100 font-lg">
-                  Getting results ...
-                </h4>
-              </>
-            ) : (
-              <></>
-            )}
+
             {phoneResult && (
               <ul>
                 {phoneResult.map((result, index) => (
                   <li key={index}>
                     {/* <pre>{JSON.stringify(result, null, 2)}</pre> */}
-                    <img
-                      src="https://pps.whatsapp.net/v/t61.24694-24/438417446_355380894211976_3200717348354125310_n.jpg?ccb=11-4&oh=01_Q5AaIGvu6ZjbvKxk13OlOD0-he3nTSuxJlLmwPYVeEBggddd&oe=6670F2B5&_nc_sid=e6ed6c&_nc_cat=108"
-                      alt=""
-                    />
+                    <img src={result.URL} alt="" />
                   </li>
                 ))}
               </ul>
             )}
+            {/* <Image
+                    src={"https://pps.whatsapp.net/v/t61.24694-24/438417446_355380894211976_3200717348354125310_n.jpg?ccb=11-4&oh=01_Q5AaIGvu6ZjbvKxk13OlOD0-he3nTSuxJlLmwPYVeEBggddd&oe=6670F2B5&_nc_sid=e6ed6c&_nc_cat=108"}
+                    alt='picture'
+                    width={"500"}
+                    height={"500"}
+                     /> */}
           </div>
         </div>
       </div>

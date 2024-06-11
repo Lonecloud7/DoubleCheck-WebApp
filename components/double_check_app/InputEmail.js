@@ -1,13 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react'
 import BlackButton from '../button/BlackButton'
+import { CircularProgress } from '@mui/material'
 import axios from 'axios'
 
-const InputEmail = ({ heading, setTab }) => {
+const InputEmail = ({
+  heading,
+  setTab,
+  emailResult,
+  setEmailResult,
+  loading,
+  setLoading,
+}) => {
   const [email, setEmail] = useState('')
-  const [stuff, setStuff] = useState([])
+
   const nextSection = () => {
-    setTab(3)
-    // getEmailResult()
+    // setTab(3)
+    getEmailResult()
   }
 
   const handleChange = (e) => {
@@ -18,15 +26,15 @@ const InputEmail = ({ heading, setTab }) => {
     method: 'GET',
     url: 'https://email-data-leak-checker.p.rapidapi.com/emaild',
     params: {
-      email: `${email}`
+      email: `${email}`,
     },
     headers: {
       'x-rapidapi-key': '14c0af8c32msh0eebc5d5107d4e5p11800ajsn2c9a945e431c',
       'x-rapidapi-host': 'email-data-leak-checker.p.rapidapi.com',
       'Content-Type': 'application/json',
-      'User-Agent': 'application-name'
-    }
-  };
+      'User-Agent': 'application-name',
+    },
+  }
 
   // try {
   // 	const response = await axios.request(options);
@@ -37,16 +45,24 @@ const InputEmail = ({ heading, setTab }) => {
 
   const getEmailResult = async () => {
     try {
+      setLoading(true)
       const { data } = await axios.request(options)
       if (data) {
         console.log('EMAIL DATA HERE', data)
-        setEmail("")
-        setStuff(data)
-
+        // setEmail('')
+        const message = data.message
+        const results = data.results
+        setEmailResult({ message, results })
+        setLoading(false)
+        setTab(3)
       } else {
         alert('Failed to Get Results!')
+        setLoading(false)
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err)
+      setLoading(false)
+    }
   }
 
   return (
@@ -98,15 +114,23 @@ const InputEmail = ({ heading, setTab }) => {
               </div>
             </div>
 
-            <div className="flex justify-center mt-4 mx-auto ">
-              <div className="ml-8">
+            <div className="flex flex-wrap justify-center text-center -m-2 gap-1 md:gap-4">
+              <BlackButton text="Back" onClick={() => setTab(1)} />
+              {loading ? (
+                <>
+                  <CircularProgress className="text-white" />
+                  <h4 className="mt-2 text-indigo-100 font-lg">
+                    Getting results ...
+                  </h4>
+                </>
+              ) : (
                 <BlackButton
-                  text={'Start Scan'}
+                  text={'Start Search'}
                   onClick={() => nextSection()}
                 />
-              </div>
+              )}
             </div>
-            {stuff}
+            
           </div>
         </div>
       </div>

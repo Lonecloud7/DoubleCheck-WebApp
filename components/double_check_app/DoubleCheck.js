@@ -14,8 +14,11 @@ import Results from './Results'
 
 const DoubleCheck = () => {
   // const router = useRouter()
-  const [tab, setTab] = useState(3)
-  const [urlResults, setUrlResults] = useState([])
+  const [tab, setTab] = useState(1)
+  const [urlResults, setUrlResults] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [phoneResult, setPhoneResult] = useState(null)
+  const [emailResult, setEmailResult] = useState(null)
 
   return (
     <div className="py-10">
@@ -33,13 +36,14 @@ const DoubleCheck = () => {
               setTab={setTab}
               setUrlResults={setUrlResults}
               urlResults={urlResults}
+              loading={loading}
+              setLoading={setLoading}
             />
+            
             <ul>
-              {urlResults.map((result, index) => (
-                <li key={index}>
-                  <pre>{JSON.stringify(result, null, 2)}</pre>
-                </li>
-              ))}
+              <li>
+                <pre>{JSON.stringify(urlResults, null, 2)}</pre>
+              </li>
             </ul>
           </motion.div>
         )}
@@ -50,7 +54,14 @@ const DoubleCheck = () => {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -300, opacity: 0 }}
           >
-            <InputEmail heading={'Enter Email here'} setTab={setTab} />
+            <InputEmail
+              heading={'Enter Email here'}
+              setTab={setTab}
+              emailResult={emailResult}
+              setEmailResult={setEmailResult}
+              loading={loading}
+              setLoading={setLoading}
+            />
           </motion.div>
         )}
         {tab === 3 && (
@@ -60,7 +71,14 @@ const DoubleCheck = () => {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -300, opacity: 0 }}
           >
-            <InputPhone heading={'Enter Phone Number here'} setTab={setTab} />
+            <InputPhone
+              heading={'Enter Phone Number here'}
+              setTab={setTab}
+              phoneResult={phoneResult}
+              setPhoneResult={setPhoneResult}
+              loading={loading}
+              setLoading={setLoading}
+            />
           </motion.div>
         )}
         {tab === 4 && (
@@ -70,7 +88,12 @@ const DoubleCheck = () => {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -300, opacity: 0 }}
           >
-            <Results />
+            <Results
+              setInputTab={setTab}
+              phoneResult={phoneResult}
+              emailResult={emailResult}
+              urlResults={urlResults}
+            />
           </motion.div>
         )}
       </AnimatePresence>
