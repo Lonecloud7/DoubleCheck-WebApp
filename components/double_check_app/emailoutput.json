@@ -33,7 +33,41 @@ results.map(result > result.result)
 
 
 
+im getting the errror httpRecommendation is not defined
 
+const getChatGpt = async () => {
+    try {
+      setLoading(true)
+      const [httpRes, sslRes, portRes] = await Promise.all([
+        axios.request(generateOptions(httpPrompt)),
+        axios.request(generateOptions(sslPrompt)),
+        axios.request(generateOptions(portPrompt)),
+      ])
+
+      console.log('HTTP Response:', httpRes.data)
+      console.log('SSL Response:', sslRes.data)
+      console.log('Port Response:', portRes.data)
+
+      if (httpRes && sslRes && portRes) {
+        setChatgtpResult([
+          (httpRecommendation = httpRes.data.results),
+          (sslRecommendation = sslRes.data.results),
+          (portRecommendation = portRes.data.results),
+        ])
+
+        console.log('GPT DATA HERE>>>>>x', chatgtpResult)
+
+        setLoading(false)
+      } else {
+        setLoading(false)
+        alert('Failed to Get Results!')
+      }
+    } catch (err) {
+      console.error(err)
+      alert('An error occurred while fetching the data.')
+      setLoading(false)
+    }
+  }
 
 
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ResultOutput from './ResultOutput'
 import ResultValue from './ResultValue'
+import ChatBot from './ChatBot'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import BlackButton from '../button/BlackButton'
@@ -205,11 +206,38 @@ const Results = ({ phoneResult, emailResult, urlResults, setInputTab }) => {
 
                     <div className="px-2 pb-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 ">
                       <div className="flex flex-wrap justify-center text-center -m-2 gap-1 md:gap-4">
-                        {/* <BlackButton
-                          text="Next"
-                          onClick={() => setTab(4)}
-                        /> */}
                         <BlackButton text="Back" onClick={() => setTab(2)} />
+                        <BlackButton text="Next" onClick={() => setTab(4)} />
+                      
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+              {tab === 4 && (
+                <motion.div
+                  key="4"
+                  initial={{ x: 300, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: -300, opacity: 0 }}
+                >
+                  <div>
+                    <h1 className="max-w-lg mb-6 text-3xl font-normal leading-none tracking-tight text-white sm:text-4xl mx-auto">
+                      CHAT GTP RECOMMENDATIONS
+                    </h1>
+
+                    <div className="h-full w-full"></div>
+                    <ChatBot
+                      httpResponse={urlResults.httpResponse}
+                      sslResponse={urlResults.sslResponse}
+                      WebCrawlResponse={urlResults.WebCrawlResponse}
+                      portResponse={urlResults.portResponse}
+                    />
+
+                    <div className="px-2 pb-10 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 ">
+                      <div className="flex flex-wrap justify-center text-center -m-2 gap-1 md:gap-4">
+                        <BlackButton text="Back" onClick={() => setTab(3)} />
+                        {/* <BlackButton text="Next" onClick={() => setTab(3)} /> */}
                       </div>
                     </div>
                   </div>

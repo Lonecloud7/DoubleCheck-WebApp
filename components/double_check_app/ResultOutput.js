@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import Link from 'next/link'
-import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
+import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip'
 
 const ResultOutput = ({
   color,
@@ -14,7 +14,10 @@ const ResultOutput = ({
   http = false,
   port = false,
   webCrawl = false,
+  chatBot = false,
   urlResults = null,
+  chatgtpResult = null,
+  recommendation = null,
 }) => {
   return (
     <div>
@@ -189,6 +192,20 @@ const ResultOutput = ({
                   </li>
                 </ul>
               ))}
+            </>
+          )}
+          {chatBot && (
+            <>
+              {recommendation && (
+                <div className="text-gray-800">
+                  <h3 className="text-gray-800 text-xl font-bold mb-2">
+                    <React.Fragment>CHATBOT RESULTS</React.Fragment>
+                  </h3>
+                  <ul className="text-gray-800">
+                    <p>{recommendation}</p>
+                  </ul>
+                </div>
+              )}
             </>
           )}
         </div>

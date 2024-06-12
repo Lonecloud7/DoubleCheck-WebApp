@@ -147,7 +147,7 @@ const InputURL = ({
 
         // setUrl('')
 
-        setTab(2)
+        setTab(4)
 
         setLoading(false)
       } else {

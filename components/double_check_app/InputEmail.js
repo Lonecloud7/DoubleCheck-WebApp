@@ -130,7 +130,6 @@ const InputEmail = ({
                 />
               )}
             </div>
-            
           </div>
         </div>
       </div>
