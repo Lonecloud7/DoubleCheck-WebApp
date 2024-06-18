@@ -18,21 +18,11 @@ const ResultOutput = ({
   urlResults = null,
   chatgtpResult = null,
   recommendation = null,
+  type = null,
 }) => {
   return (
     <div>
       <div className="bg-white rounded-lg shadow-sm overflow-hidden w-full mt-3">
-        {/* <div className="flex items-center justify-between px-4 py-2 bg-gray-100">
-          <div className="flex items-center">
-            <div
-              className={`rounded-full ${color} w-8 h-8 flex items-center justify-center`}
-            >
-              <p className="text-white font-bold">B</p>
-            </div>
-            <p className="ml-2 font-bold text-gray-800">Great!</p>
-          </div>
-          <p className="text-gray-600 text-sm">Result here</p>
-        </div> */}
         <div className="px-4 py-3">
           {email && (
             <>
@@ -143,29 +133,35 @@ const ResultOutput = ({
                   <b>Pages</b> :{' '}
                   {urlResults.WebCrawlResponse.anchor_links.map(
                     (webCrawl, index) => (
-                      <Link
-                        key={index}
-                        href={webCrawl.url}
-                        className="text-gray-800 link mb-2"
-                      >
-                        <li>{webCrawl.url}</li>
-                      </Link>
+                      <ul key={index}>
+                        <a
+                          href={webCrawl.url}
+                          className="text-gray-800 link"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <li>{webCrawl.url}</li>
+                        </a>
+                      </ul>
                     ),
                   )}
                 </li>
                 <li>
                   <b>Images</b> :{' '}
-                  {urlResults.WebCrawlResponse.image_links.map(
-                    (webCrawl, index) => (
-                      <Link
-                        key={index}
-                        href={webCrawl.url}
-                        className="text-gray-800 link mb-2"
-                      >
-                        <li>{webCrawl.url}</li>
-                      </Link>
-                    ),
-                  )}
+                  {urlResults.WebCrawlResponse.image_links
+                    .filter((webCrawl) => webCrawl.url.startsWith('https://'))
+                    .map((webCrawl, index) => (
+                      <div key={index} className="mb-2">
+                        <a
+                          href={webCrawl.url}
+                          className="text-gray-800 link"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {webCrawl.url}
+                        </a>
+                      </div>
+                    ))}
                 </li>
                 <li>
                   <b>Blacklisted Scripts</b> : None
@@ -197,14 +193,14 @@ const ResultOutput = ({
           {chatBot && (
             <>
               {recommendation && (
-                <div className="text-gray-800">
+                <>
                   <h3 className="text-gray-800 text-xl font-bold mb-2">
-                    <React.Fragment>CHATBOT RESULTS</React.Fragment>
+                    <React.Fragment>{type} Recommendations</React.Fragment>
                   </h3>
                   <ul className="text-gray-800">
-                    <p>{recommendation}</p>
+                    <li>{recommendation}</li>
                   </ul>
-                </div>
+                </>
               )}
             </>
           )}

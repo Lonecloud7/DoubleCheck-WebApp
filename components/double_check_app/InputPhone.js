@@ -14,6 +14,9 @@ const InputPhone = ({
   loading,
 }) => {
   const [phone, setPhone] = useState('')
+  const [error, setError] = useState('')
+  const [isValid, setIsValid] = useState(true)
+  const [isChecked, setIsChecked] = useState(false)
 
   const nextSection = () => {
     // setTab(4)
@@ -36,9 +39,33 @@ const InputPhone = ({
     },
   }
 
+  const validatePhone = (inputPhone) => {
+    // Check if the phone number starts with "+" and only contains digits after it
+    const phonePattern = /^\+\d+$/
+    if (!phonePattern.test(inputPhone)) {
+      throw new Error(
+        'Phone number must start with a + country code and contain only digits.',
+      )
+    }
+    return inputPhone
+  }
+
   const getPhoneResult = async () => {
+    if (!phone.trim()) {
+      setError('Phone number cannot be empty.')
+      setIsValid(false)
+      return
+    }
+    if (!isChecked) {
+      setError('You must agree to the terms and conditions.')
+      setIsValid(false)
+      return
+    }
     try {
+      validatePhone(phone)
+      setIsValid(true)
       setLoading(true)
+      setError('')
       const { data } = await axios.request(options)
       if (data) {
         console.log('PHONE DATA HERE>>>>>x', data)
@@ -52,8 +79,10 @@ const InputPhone = ({
         alert('Failed to Get Results!')
       }
     } catch (err) {
-      console.log(err)
       setLoading(false)
+      setIsValid(false)
+      setError(err.message)
+      console.log(err)
     }
   }
   return (
@@ -64,9 +93,11 @@ const InputPhone = ({
             {heading}
           </h1>
           <p className="w-6/12 text-base text-indigo-100 md:text-lg">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus
-            ab distinctio reiciendis aperiam?
+            Find out if any sensitive information can be gotten from your phone number.
           </p>
+          <div className="relative mb-4 flex justify-center text-white">
+            {error && <span>{error}</span>}
+          </div>
         </div>
         <div className="lg:w-2/2 md:w-2/3 mx-auto">
           <div className="">
@@ -83,9 +114,9 @@ const InputPhone = ({
                   name="phone"
                   value={phone}
                   className={`w-full ${
-                    false
-                      ? 'bg-red-100 border-red-300 focus:border-red-500 focus:bg-red focus:ring-red-200'
-                      : 'bg-gray-100 border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-indigo-200'
+                    isValid
+                      ? 'bg-gray-100 border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-indigo-200'
+                      : 'bg-red-100 border-red-300 focus:border-red-500 focus:bg-red focus:ring-red-200'
                   }  bg-opacity-100 rounded border  focus:border-indigo-500  focus:ring-2  h-16 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out`}
                 ></input>
               </div>
@@ -100,6 +131,7 @@ const InputPhone = ({
                   <input
                     type="checkbox"
                     className="checkbox mx-4 checkbox-accent"
+                    onChange={(e) => setIsChecked(e.target.checked)}
                   />
                 </label>
               </div>

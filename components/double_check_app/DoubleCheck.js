@@ -3,19 +3,18 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 // import axios from 'axios'
 import { useRouter } from 'next/router'
-// import { getTokenrFromLocalCookie } from '@/lib/auth'
-// import { useFetchUser } from '@/lib/authContext'
-// import Cookies from 'js-cookie'
+
 
 import InputUrl from './InputUrl'
 import InputEmail from './InputEmail'
 import InputPhone from './InputPhone'
 import Results from './Results'
+import sampleResponse from './httpresponse.json'
 
 const DoubleCheck = () => {
   // const router = useRouter()
   const [tab, setTab] = useState(1)
-  const [urlResults, setUrlResults] = useState(null)
+  const [urlResults, setUrlResults] = useState(sampleResponse)
   const [loading, setLoading] = useState(false)
   const [phoneResult, setPhoneResult] = useState(null)
   const [emailResult, setEmailResult] = useState(null)
@@ -40,11 +39,11 @@ const DoubleCheck = () => {
               setLoading={setLoading}
             />
             
-            <ul>
+            {/* <ul>
               <li>
                 <pre>{JSON.stringify(urlResults, null, 2)}</pre>
               </li>
-            </ul>
+            </ul> */}
           </motion.div>
         )}
         {tab === 2 && (

@@ -2,11 +2,10 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Button from '@/components/button/Button'
-import { useFetchUser } from '@/lib/authContext'
-import { unsetToken } from '@/lib/auth'
+
 
 function Header() {
-  const { user, loading } = useFetchUser()
+
 
   return (
     <nav

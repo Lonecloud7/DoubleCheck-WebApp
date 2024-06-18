@@ -2,10 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { CircularProgress } from '@mui/material'
 
 import axios from 'axios'
-import { useRouter } from 'next/router'
-import { getTokenrFromLocalCookie } from '@/lib/auth'
-import { useFetchUser } from '@/lib/authContext'
-import Cookies from 'js-cookie'
+
 
 const ResultValue = ({showResult, percentage}) => {
   return (

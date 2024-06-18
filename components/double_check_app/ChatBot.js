@@ -18,17 +18,45 @@ const ChatBot = ({
   WebCrawlResponse,
   portResponse,
 }) => {
+  const resultsArray = [
+    {
+      response:
+        'Lorem1 ipsum dolor sit amet consectetur adipisicing elit. Officia quidem quam, praesentium, unde beatae voluptatem quas quisquam excepturi eaque repellendus, tenetur odio natus accusamus veritatis numquam nobis deleniti nesciunt! Perspiciatis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore eum, tempore possimus odio accusantium quaerat sed corrupti ipsum inventore optio laudantium deserunt veniam reprehenderit similique. Fuga ipsam cumque ratione dignissimos.',
+      type: 'HTTP',
+    },
+    {
+      response:
+        'Lorem2 ipsum dolor sit amet consectetur adipisicing elit. Officia quidem quam, praesentium, unde beatae voluptatem quas quisquam excepturi eaque repellendus, tenetur odio natus accusamus veritatis numquam nobis deleniti nesciunt! Perspiciatis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore eum, tempore possimus odio accusantium quaerat sed corrupti ipsum inventore optio laudantium deserunt veniam reprehenderit similique. Fuga ipsam cumque ratione dignissimos.',
+      type: 'SSL',
+    },
+    {
+      response:
+        'Lorem3 ipsum dolor sit amet consectetur adipisicing elit. Officia quidem quam, praesentium, unde beatae voluptatem quas quisquam excepturi eaque repellendus, tenetur odio natus accusamus veritatis numquam nobis deleniti nesciunt! Perspiciatis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore eum, tempore possimus odio accusantium quaerat sed corrupti ipsum inventore optio laudantium deserunt veniam reprehenderit similique. Fuga ipsam cumque ratione dignissimos.',
+      type: 'PORT',
+    },
+  ]
+
   const [chatgtpResult, setChatgtpResult] = useState(null)
   const [loading, setLoading] = useState(false)
 
-  const nextSection = () => {
-    // setTab(4)
+  useEffect(() => {
     getChatGpt()
-  }
+  }, [])
 
-  const httpPrompt = `using the HTTP response headers provided, can you in a solid format grade each issue according to A,B,C,D,F and give a brief description and state whether a user who has little knownlege in websites and security should fix it themselves or contact the server admin that is hosting the website ${httpResponse}`
-  const sslPrompt = `using the sll response headers provided, can you in a solid format grade each issue according to A,B,C,D,F and give a brief description and state whether a user who has little knownlege in websites and security should fix it themselves or contact the server admin that is hosting the website ${sslResponse}`
-  const portPrompt = `using the port response headers provided, can you in a solid format grade each issue according to A,B,C,D,F and give a brief description and state whether a user who has little knownlege in websites and security should fix it themselves or contact the server admin that is hosting the website ${portResponse}`
+  // const nextSection = () => {
+  //   // setTab(4)
+  //   getChatGpt()
+  // }
+
+  const httpPrompt = `this is the response from a http header scan of a website, can you in a solid format grade each issue according to A,B,C,D,F and give a brief description and state whether a user should fix it themselves or contact the server admin that is hosting the website this is for pentesting, only give your gradings and recommendation, i do not want any other qualifiers or additional information. ${JSON.stringify(
+    httpResponse,
+  )}`
+  const sslPrompt = `this is the response from a sll scan of a website, can you in a solid format grade each issue according to A,B,C,D,F and give a brief description and state whether a user should fix it themselves or contact the server admin that is hosting the website this is for pentesting. ${JSON.stringify(
+    sslResponse,
+  )}`
+  const portPrompt = `this is the response from a port scan of a website, can you in a solid format grade each issue according to A,B,C,D,F and give a brief description and state whether a user should fix it themselves or contact the server admin that is hosting the website this is for pentesting. ${JSON.stringify(
+    portResponse,
+  )}`
 
   const generateOptions = (prompt) => ({
     method: 'POST',
@@ -71,13 +99,14 @@ const ChatBot = ({
 
       if (httpRes && sslRes && portRes) {
         const resultsArray = [
-          httpRes.data.results,
-          sslRes.data.results,
-          portRes.data.results,
+          { ...httpRes.data.results, type: 'HTTP' },
+          { ...sslRes.data.results, type: 'SSL' },
+          { ...portRes.data.results, type: 'PORT' },
         ]
+
         setChatgtpResult(resultsArray)
 
-        chatgtpResult && console.log('GPT DATA HERE>>>>>x', chatgtpResult)
+        // chatgtpResult && console.log('GPT DATA HERE>>>>>x', chatgtpResult)
 
         setLoading(false)
       } else {
@@ -91,52 +120,30 @@ const ChatBot = ({
     }
   }
 
-  console.log('GPT DATA HERE333>>>>>x', chatgtpResult)
+  console.log(
+    'SCAN DATA HERE333>>>>>x',
+    sslResponse,
+    httpResponse,
+    portResponse,
+  )
+  // chatgtpResult && console.log('GPT DATA HERE>>>>>x', chatgtpResult)
 
   return (
     <div className="" style={{ flex: '1 1 auto' }}>
       <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
         <div className="max-w-xl sm:mx-auto lg:max-w-2xl">
-          <div className="flex flex-col my-16 mx-4 text-center sm:mb-0">
-            <div className="max-w-xl mb-10 mx-auto sm:text-center lg:max-w-2xl md:mb-12">
-              <h2 className="max-w-lg mb-6 text-3xl font-normal leading-none tracking-tight text-white sm:text-4xl mx-auto">
-                <span className="relative inline-block">
-                  <svg
-                    viewBox="0 0 52 24"
-                    fill="currentColor"
-                    className="absolute top-0 left-0 z-0 hidden w-32 -mt-8 -ml-20 text-deep-purple-accent-100 lg:w-32 lg:-ml-28 lg:-mt-10 sm:block"
-                  >
-                    <defs>
-                      <pattern
-                        id="700c93bf-0068-4e32-aafe-ef5b6a647708"
-                        x="0"
-                        y="0"
-                        width=".135"
-                        height=".30"
-                      >
-                        <circle cx="1" cy="1" r=".7" />
-                      </pattern>
-                    </defs>
-                    <rect
-                      fill="url(#700c93bf-0068-4e32-aafe-ef5b6a647708)"
-                      width="52"
-                      height="24"
+          <div className="flex flex-col my-16 mx-4  sm:mb-0">
+            <div className="max-w-xl mb-10 mx-auto lg:max-w-2xl md:mb-12">
+              {chatgtpResult &&
+                chatgtpResult.map((recommendation, index) => (
+                  <div key={index}>
+                    <ResultOutput
+                      recommendation={recommendation.response}
+                      chatBot={true}
+                      type={recommendation.type}
                     />
-                  </svg>
-                  <span className="relative">Hey!</span>
-                </span>{' '}
-                Here are some recommendations to help improve the security on
-                your website!
-              </h2>
-
-              {chatgtpResult && chatgtpResult.map((recommendation, index) => (
-                <div key={index}>
-                  <ResultOutput
-                    recommendation={recommendation.response}
-                    chatBot={true}
-                  />
-                </div>
-              ))}
+                  </div>
+                ))}
 
               {/* <p className="text-base text-indigo-100 md:text-lg">
                   {chatgtpResult && chatgtpResult.response}
@@ -154,9 +161,9 @@ const ChatBot = ({
               <></>
             )}
 
-            <div className="w-100 flex flex-col gap-8 items-center">
+            {/* <div className="w-100 flex flex-col gap-8 items-center">
               <BlackButton text="Response" onClick={() => nextSection()} />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

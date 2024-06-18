@@ -12,6 +12,9 @@ const InputEmail = ({
   setLoading,
 }) => {
   const [email, setEmail] = useState('')
+  const [error, setError] = useState('')
+  const [isValid, setIsValid] = useState(true)
+  const [isChecked, setIsChecked] = useState(false)
 
   const nextSection = () => {
     // setTab(3)
@@ -42,10 +45,35 @@ const InputEmail = ({
   // } catch (error) {
   // 	console.error(error);
   // }
+  const validateEmail = (inputEmail) => {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    if (!emailPattern.test(inputEmail)) {
+      setError('Invalid email address222.')
+    }
+    return inputEmail
+  }
 
   const getEmailResult = async () => {
+    if (!email.trim()) {
+      setError('Email cannot be empty.')
+      setIsValid(false)
+      return
+    }
+
+    if (!isChecked) {
+      setError('You must agree to the terms and conditions.')
+      setIsValid(false)
+      return
+    }
+
     try {
+      validateEmail(email)
+
+      setIsValid(true)
       setLoading(true)
+      setError('')
+      
+
       const { data } = await axios.request(options)
       if (data) {
         console.log('EMAIL DATA HERE', data)
@@ -62,6 +90,7 @@ const InputEmail = ({
     } catch (err) {
       console.log(err)
       setLoading(false)
+      setError('Failed to get email results.')
     }
   }
 
@@ -73,9 +102,11 @@ const InputEmail = ({
             {heading}
           </h1>
           <p className="w-6/12 text-base text-indigo-100 md:text-lg">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus
-            ab distinctio reiciendis aperiam?
+            Let's Find out if your Email has been leaked previously.
           </p>
+          <div className="relative mb-4 flex justify-center text-white">
+            {error && <span>{error}</span>}
+          </div>
         </div>
         <div className="lg:w-2/2 md:w-2/3 mx-auto">
           <div className="">
@@ -92,9 +123,9 @@ const InputEmail = ({
                   name="email"
                   value={email}
                   className={`w-full ${
-                    false
-                      ? 'bg-red-100 border-red-300 focus:border-red-500 focus:bg-red focus:ring-red-200'
-                      : 'bg-gray-100 border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-indigo-200'
+                    isValid
+                      ? 'bg-gray-100 border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-indigo-200'
+                      : 'bg-red-100 border-red-300 focus:border-red-500 focus:bg-red focus:ring-red-200'
                   }  bg-opacity-100 rounded border  focus:border-indigo-500  focus:ring-2  h-16 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out`}
                 ></input>
               </div>
@@ -109,6 +140,7 @@ const InputEmail = ({
                   <input
                     type="checkbox"
                     className="checkbox mx-4 checkbox-accent"
+                    onChange={(e) => setIsChecked(e.target.checked)}
                   />
                 </label>
               </div>

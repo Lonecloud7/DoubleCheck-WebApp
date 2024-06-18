@@ -12,11 +12,14 @@ const InputURL = ({
   setLoading,
 }) => {
   const [url, setUrl] = useState('')
+  const [error, setError] = useState('')
+  const [isValid, setIsValid] = useState(true)
+  const [isChecked, setIsChecked] = useState(false)
 
   const nextSection = () => {
-    // setTab(2)
+    setTab(2)
 
-    getUrlResult()
+    // getUrlResult()
   }
 
   const handleChange = (e) => {
@@ -123,9 +126,34 @@ const InputURL = ({
     },
   }
 
+  const validateUrl = (inputUrl) => {
+    const urlWithoutProtocol = inputUrl.replace(/^https?:\/\//, '')
+
+    if (!urlWithoutProtocol.includes('.com')) {
+      throw new Error("URL must contain '.com'")
+    }
+
+    return urlWithoutProtocol
+  }
+
   const getUrlResult = async () => {
+    if (!url.trim()) {
+      setError('URL cannot be empty.')
+      setIsValid(false)
+      return
+    }
+    if (!isChecked) {
+      setError('You must agree to the terms and conditions.')
+      setIsValid(false)
+      return
+    }
+
     try {
+      validateUrl(url)
+      setIsValid(true)
       setLoading(true)
+      setError('')
+
       const { data: dataHttp } = await axios.request(optionsHttpHeader)
       const { data: dataWebSpider } = await axios.request(optionsWebSpider)
       const { data: dataPort } = await axios.request(optionsPortScan)
@@ -143,19 +171,26 @@ const InputURL = ({
           portResponse,
           WebCrawlResponse,
         }),
-          console.log('URL RESULTS HERE!!!>>>>', urlResults)
+          // console.log('URL RESULTS HERE!!!>>>>', urlResults)
 
-        // setUrl('')
+          // setUrl('')
 
-        setTab(4)
+          setTab(4)
 
         setLoading(false)
       } else {
         alert('Failed to Get Results!')
         setLoading(false)
       }
-    } catch (err) {}
+    } catch (err) {
+      setLoading(false)
+      setIsValid(false)
+      setError(err.message)
+      console.log(err)
+    }
   }
+
+  // console.log('URL RESULTS HERE!!!>>>>', urlResults)
 
   return (
     <div>
@@ -165,17 +200,16 @@ const InputURL = ({
             {heading}
           </h1>
           <p className="w-6/12 text-base text-indigo-100 md:text-lg">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus
-            ab distinctio reiciendis aperiam?
+        Quicky do a quick scan of the surface security of a website.
           </p>
+        </div>
+        <div className="relative mb-4 flex justify-center text-white">
+          {error && <span>{error}</span>}
         </div>
         <div className="lg:w-2/2 md:w-2/3 mx-auto">
           <div className="">
             <div className="p-2 w-full">
               <div className="relative">
-                {/* <label for="message" className="flex mx-auto text-white">
-                  Poem Here
-                </label> */}
                 <input
                   onChange={(e) => {
                     handleChange(e)
@@ -184,9 +218,9 @@ const InputURL = ({
                   name="url"
                   value={url}
                   className={`w-full ${
-                    false
-                      ? 'bg-red-100 border-red-300 focus:border-red-500 focus:bg-red focus:ring-red-200'
-                      : 'bg-gray-100 border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-indigo-200'
+                    isValid
+                      ? 'bg-gray-100 border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-indigo-200'
+                      : 'bg-red-100 border-red-300 focus:border-red-500 focus:bg-red focus:ring-red-200'
                   }  bg-opacity-100 rounded border  focus:border-indigo-500  focus:ring-2  h-16 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out`}
                 ></input>
               </div>
@@ -202,6 +236,7 @@ const InputURL = ({
                   <input
                     type="checkbox"
                     className="checkbox mx-4 checkbox-accent"
+                    onChange={(e) => setIsChecked(e.target.checked)}
                   />
                 </label>
               </div>

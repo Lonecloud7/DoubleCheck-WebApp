@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google'
 import Header from './header/Header'
 import MobileHeader from './header/MobileHeader'
 import Footer from './footer/Footer'
-import { UserProvider } from '@/lib/authContext'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,19 +20,24 @@ const Layout = ({
   timer,
 }) => {
   return (
-    <UserProvider value={{ user, loading }}>
+    <>
+      {' '}
       <Head>
         <title>{title ? `${title} | Double Check` : 'Double Check'}</title>
         <meta
           name="description"
-          content={desc ? `${desc}` : 'Double Check! Make sure your surface level security is protected!'}
+          content={
+            desc
+              ? `${desc}`
+              : 'Double Check! Make sure your surface level security is protected!'
+          }
         />
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main
-      //control all base background color here
-      //bg-white-700 is a placeholder incase i go back to white
+        //control all base background color here
+        //bg-white-700 is a placeholder incase i go back to white
         className={`${inter.className} bg-neutral`}
         style={{
           minHeight: '100vh',
@@ -48,7 +53,7 @@ const Layout = ({
         {children}
         {showFooter && <Footer />}
       </main>
-    </UserProvider>
+    </>
   )
 }
 

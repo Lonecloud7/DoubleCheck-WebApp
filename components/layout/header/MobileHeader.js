@@ -2,16 +2,15 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import ForumIcon from '@mui/icons-material/Forum'
-import EmbeddedTimeline from '@/components/public_square/EmbeddedTimeline'
-import { useFetchUser } from '@/lib/authContext'
-import { unsetToken } from '@/lib/auth'
+
+
 import Button from '@/components/button/Button'
 import SideBarPoems from '@/components/poems/SideBarPoems'
 
 const MobileHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-  const { user, loading } = useFetchUser()
+
 
   return (
     <nav
@@ -125,14 +124,7 @@ const MobileHeader = () => {
               >
                 Challenge
               </Link>
-            {user && (
-              <Link
-                href="/logged-in-user-poems"
-                className="my-2 text-gray-600 transition-colors duration-300 transform hover:text-gray-900"
-              >
-                Poems by You
-              </Link>
-            )}
+         
             <Link
               href="/how-to-play"
               className="my-2 text-gray-600 transition-colors duration-300 transform hover:text-gray-900"
@@ -145,15 +137,7 @@ const MobileHeader = () => {
             >
               Community
             </Link>
-            {user ? (
-              <div>
-                {/* <span className="text-lg">Let&apos;s Play, {user}</span> */}
-                <br />
-                <Button text={'Log Out'} onClick={unsetToken} />
-              </div>
-            ) : (
-              <Button text={'Log In'} link="/sign-in" />
-            )}
+           
           </div>
         </div>
 

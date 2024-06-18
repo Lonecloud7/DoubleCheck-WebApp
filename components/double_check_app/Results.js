@@ -64,7 +64,7 @@ const Results = ({ phoneResult, emailResult, urlResults, setInputTab }) => {
                     </h2>
                   </span>
 
-                  <h1 className="md:text-3xl text-2xl text-white font-medium title-font text-gray-900">
+                  <h1 className="md:text-5xl text-4xl text-white font-medium title-font text-gray-900">
                     Here are your results!
                   </h1>
                 </div>
@@ -83,9 +83,7 @@ const Results = ({ phoneResult, emailResult, urlResults, setInputTab }) => {
                   exit={{ x: -300, opacity: 0 }}
                 >
                   <div>
-                    <h1 className="max-w-lg mb-6 text-3xl font-normal leading-none tracking-tight text-white sm:text-4xl mx-auto">
-                      PHONE RESULTS
-                    </h1>
+                    
 
                     {loading ? (
                       <>
@@ -137,10 +135,8 @@ const Results = ({ phoneResult, emailResult, urlResults, setInputTab }) => {
                   exit={{ x: -300, opacity: 0 }}
                 >
                   <div>
-                    <h1 className="max-w-lg mb-6 text-3xl font-normal leading-none tracking-tight text-white sm:text-4xl mx-auto">
-                      EMAIL RESULTS
-                    </h1>
-                    <h2 className="md:text-3xl text-2xl ">
+                   
+                    <h2 className="text-white md:text-3xl text-2xl ">
                       {emailResult && emailResult.message}
                     </h2>
                     {emailResult &&
@@ -175,9 +171,7 @@ const Results = ({ phoneResult, emailResult, urlResults, setInputTab }) => {
                 >
                   <div>
                     {/* <h1 className="md:text-3xl text-2xl text-white font-medium title-font text-gray-900"> */}
-                    <h1 className="max-w-lg mb-6 text-3xl font-normal leading-none tracking-tight text-white sm:text-4xl mx-auto">
-                      URL RESULTS
-                    </h1>
+                
 
                     {urlResults && (
                       <div className="h-full w-full">
@@ -208,7 +202,6 @@ const Results = ({ phoneResult, emailResult, urlResults, setInputTab }) => {
                       <div className="flex flex-wrap justify-center text-center -m-2 gap-1 md:gap-4">
                         <BlackButton text="Back" onClick={() => setTab(2)} />
                         <BlackButton text="Next" onClick={() => setTab(4)} />
-                      
                       </div>
                     </div>
                   </div>
@@ -222,9 +215,7 @@ const Results = ({ phoneResult, emailResult, urlResults, setInputTab }) => {
                   exit={{ x: -300, opacity: 0 }}
                 >
                   <div>
-                    <h1 className="max-w-lg mb-6 text-3xl font-normal leading-none tracking-tight text-white sm:text-4xl mx-auto">
-                      CHAT GTP RECOMMENDATIONS
-                    </h1>
+                    
 
                     <div className="h-full w-full"></div>
                     <ChatBot
