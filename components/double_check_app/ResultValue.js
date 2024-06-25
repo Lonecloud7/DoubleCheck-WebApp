@@ -18,7 +18,7 @@ const ResultValue = ({showResult, percentage}) => {
             </div>
           ) : (
             <>
-              <CircularProgress className="text-white" />
+              <CircularProgress className="flex flex-col items-center justify-center" />
               <h4 className="mt-2 text-indigo-100 font-lg">
                 Getting results ...
               </h4>

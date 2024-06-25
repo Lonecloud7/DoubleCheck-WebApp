@@ -14,6 +14,7 @@ import sampleResponse from './httpresponse.json'
 const DoubleCheck = () => {
   // const router = useRouter()
   const [tab, setTab] = useState(1)
+  // const [urlResults, setUrlResults] = useState(sampleResponse.httpResponse)
   const [urlResults, setUrlResults] = useState(sampleResponse)
   const [loading, setLoading] = useState(false)
   const [phoneResult, setPhoneResult] = useState(null)

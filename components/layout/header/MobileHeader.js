@@ -103,40 +103,9 @@ const MobileHeader = () => {
           } absolute inset-x-0 z-20 w-full px-8 py-4 transition-all duration-300 ease-in-out bg-white pb-10`}
         >
           <div className="flex flex-col">
-            <Link
-              href="/"
-              className="my-2 text-gray-600 transition-colors duration-300 transform hover:text-gray-900"
-            >
-              Poem a Day
-            </Link>
-            {/* {user && (
-              <Link
-                href="/personalized-square"
-                className="my-2 text-gray-600 transition-colors duration-300 transform hover:text-gray-900"
-              >
-                Personalized square
-              </Link>
-            )} */}
-
-            <Link
-                href="/challenge"
-                className="my-2 text-gray-600 transition-colors duration-300 transform hover:text-gray-900"
-              >
-                Challenge
-              </Link>
-         
-            <Link
-              href="/how-to-play"
-              className="my-2 text-gray-600 transition-colors duration-300 transform hover:text-gray-900"
-            >
-              How to play
-            </Link>
-            <Link
-              href="/community-forum"
-              className="my-2 text-gray-600 transition-colors duration-300 transform hover:text-gray-900"
-            >
-              Community
-            </Link>
+          <Link href="/doublecheck-page" className="mr-5 hover:text-gray-900">
+            Double Check
+          </Link>
            
           </div>
         </div>

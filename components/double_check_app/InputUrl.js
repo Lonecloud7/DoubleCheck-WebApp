@@ -154,20 +154,19 @@ const InputURL = ({
       setLoading(true)
       setError('')
 
-      const { data: dataHttp } = await axios.request(optionsHttpHeader)
+      // const { data: dataHttp } = await axios.request(optionsHttpHeader)
       const { data: dataWebSpider } = await axios.request(optionsWebSpider)
       const { data: dataPort } = await axios.request(optionsPortScan)
       const { data: dataSsl } = await axios.request(optionsSslScan)
 
-      if (dataHttp && dataWebSpider && dataPort && dataSsl) {
-        const httpResponse = dataHttp.results.optional
+      if (dataWebSpider && dataPort && dataSsl) {
+        // const httpResponse = dataHttp.results.optional
         const sslResponse = dataSsl.results.certs[0]
         const WebCrawlResponse = dataWebSpider.results
         const portResponse = dataPort.results.hosts[0]
 
         setUrlResults({
-          httpResponse,
-          sslResponse,
+          ...sslResponse,
           portResponse,
           WebCrawlResponse,
         }),
@@ -175,7 +174,7 @@ const InputURL = ({
 
           // setUrl('')
 
-          setTab(4)
+          setTab(2)
 
         setLoading(false)
       } else {
@@ -200,7 +199,7 @@ const InputURL = ({
             {heading}
           </h1>
           <p className="w-6/12 text-base text-indigo-100 md:text-lg">
-        Quicky do a quick scan of the surface security of a website.
+            Quicky do a quick scan of the surface security of a website.
           </p>
         </div>
         <div className="relative mb-4 flex justify-center text-white">
@@ -246,7 +245,7 @@ const InputURL = ({
               {/* <BlackButton text="Back" onClick={() => setTab(1)} /> */}
               {loading ? (
                 <>
-                  <CircularProgress className="text-white" />
+                  <CircularProgress className="flex flex-col items-center justify-center" />
                   <h4 className="mt-2 text-indigo-100 font-lg">
                     Getting results ...
                   </h4>

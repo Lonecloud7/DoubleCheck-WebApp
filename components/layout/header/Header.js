@@ -29,12 +29,12 @@ function Header() {
           <Link href="/doublecheck-page" className="mr-5 hover:text-gray-900">
             Double Check
           </Link>
-          <Link href="/results" className="mr-5 hover:text-gray-900">
+          {/* <Link href="/results" className="mr-5 hover:text-gray-900">
            Results
           </Link>
           <Link href="/chatbot-page" className="mr-5 hover:text-gray-900">
            ChatBot
-          </Link>
+          </Link> */}
           {/* <Link href="/" className="mr-5 hover:text-gray-900">
            Terms and Services
           </Link>

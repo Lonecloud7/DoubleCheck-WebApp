@@ -102,7 +102,7 @@ const InputEmail = ({
             {heading}
           </h1>
           <p className="w-6/12 text-base text-indigo-100 md:text-lg">
-            Let's Find out if your Email has been leaked previously.
+            Let&apos;s Find out if your Email has been leaked previously.
           </p>
           <div className="relative mb-4 flex justify-center text-white">
             {error && <span>{error}</span>}
@@ -150,7 +150,7 @@ const InputEmail = ({
               <BlackButton text="Back" onClick={() => setTab(1)} />
               {loading ? (
                 <>
-                  <CircularProgress className="text-white" />
+                  <CircularProgress className="flex flex-col items-center justify-center" />
                   <h4 className="mt-2 text-indigo-100 font-lg">
                     Getting results ...
                   </h4>

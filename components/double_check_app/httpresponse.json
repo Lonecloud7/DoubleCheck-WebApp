@@ -1,7 +1,6 @@
 {
   "httpResponse": {
     "Content-Type": "image/svg+xml;charset=utf-8",
-
     "accept-ranges": "bytes",
     "access-control-allow-origin": "*",
     "age": "1",

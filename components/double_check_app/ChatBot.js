@@ -6,6 +6,8 @@ import SecondaryButton from '../button/SecondaryButton'
 import BlackButton from '../button/BlackButton'
 import ResultOutput from './ResultOutput'
 
+import sampleResponse from './chatoutpot.json'
+
 import { CircularProgress } from '@mui/material'
 
 import axios from 'axios'
@@ -18,24 +20,6 @@ const ChatBot = ({
   WebCrawlResponse,
   portResponse,
 }) => {
-  const resultsArray = [
-    {
-      response:
-        'Lorem1 ipsum dolor sit amet consectetur adipisicing elit. Officia quidem quam, praesentium, unde beatae voluptatem quas quisquam excepturi eaque repellendus, tenetur odio natus accusamus veritatis numquam nobis deleniti nesciunt! Perspiciatis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore eum, tempore possimus odio accusantium quaerat sed corrupti ipsum inventore optio laudantium deserunt veniam reprehenderit similique. Fuga ipsam cumque ratione dignissimos.',
-      type: 'HTTP',
-    },
-    {
-      response:
-        'Lorem2 ipsum dolor sit amet consectetur adipisicing elit. Officia quidem quam, praesentium, unde beatae voluptatem quas quisquam excepturi eaque repellendus, tenetur odio natus accusamus veritatis numquam nobis deleniti nesciunt! Perspiciatis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore eum, tempore possimus odio accusantium quaerat sed corrupti ipsum inventore optio laudantium deserunt veniam reprehenderit similique. Fuga ipsam cumque ratione dignissimos.',
-      type: 'SSL',
-    },
-    {
-      response:
-        'Lorem3 ipsum dolor sit amet consectetur adipisicing elit. Officia quidem quam, praesentium, unde beatae voluptatem quas quisquam excepturi eaque repellendus, tenetur odio natus accusamus veritatis numquam nobis deleniti nesciunt! Perspiciatis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore eum, tempore possimus odio accusantium quaerat sed corrupti ipsum inventore optio laudantium deserunt veniam reprehenderit similique. Fuga ipsam cumque ratione dignissimos.',
-      type: 'PORT',
-    },
-  ]
-
   const [chatgtpResult, setChatgtpResult] = useState(null)
   const [loading, setLoading] = useState(false)
 
@@ -43,18 +27,18 @@ const ChatBot = ({
     getChatGpt()
   }, [])
 
-  // const nextSection = () => {
-  //   // setTab(4)
-  //   getChatGpt()
-  // }
+  const nextSection = () => {
+    // setTab(4)
+    getChatGpt()
+  }
 
-  const httpPrompt = `this is the response from a http header scan of a website, can you in a solid format grade each issue according to A,B,C,D,F and give a brief description and state whether a user should fix it themselves or contact the server admin that is hosting the website this is for pentesting, only give your gradings and recommendation, i do not want any other qualifiers or additional information. ${JSON.stringify(
+  const httpPrompt = `this is the response from a http header scan of a website, can you in give a brief description and state whether a user should fix it themselves or contact the server admin that is hosting the website this is for pentesting,  keep it only to the most important points, i do not want any other qualifiers or additional information, only give me the numbered points. ${JSON.stringify(
     httpResponse,
   )}`
-  const sslPrompt = `this is the response from a sll scan of a website, can you in a solid format grade each issue according to A,B,C,D,F and give a brief description and state whether a user should fix it themselves or contact the server admin that is hosting the website this is for pentesting. ${JSON.stringify(
+  const sslPrompt = `this is the response from a ssl   scan of a website, can you in give a brief description and state whether a user should fix it themselves or contact the server admin that is hosting the website this is for pentesting,  keep it only to the most important points, i do not want any other qualifiers or additional information, only give me the numbered points. ${JSON.stringify(
     sslResponse,
   )}`
-  const portPrompt = `this is the response from a port scan of a website, can you in a solid format grade each issue according to A,B,C,D,F and give a brief description and state whether a user should fix it themselves or contact the server admin that is hosting the website this is for pentesting. ${JSON.stringify(
+  const portPrompt = `this is the response from a port  scan of a website, can you in give a brief description and state whether a user should fix it themselves or contact the server admin that is hosting the website this is for pentesting,  keep it only to the most important points, i do not want any other qualifiers or additional information, only give me the numbered points. ${JSON.stringify(
     portResponse,
   )}`
 
@@ -84,6 +68,21 @@ const ChatBot = ({
     },
   })
 
+  const parsePoints = (str) => {
+    return str
+      .split(/(\d+\.\s)/)
+      .filter(Boolean)
+      .map((item, index, array) => {
+        if (item.match(/(\d+\.\s)/)) {
+          return item + (array[index + 1] || '')
+        } else {
+          return ''
+        }
+      })
+      .filter(Boolean)
+      .map((point) => point.trim())
+  }
+
   const getChatGpt = async () => {
     try {
       setLoading(true)
@@ -97,11 +96,16 @@ const ChatBot = ({
       console.log('SSL Response:', sslRes.data)
       console.log('Port Response:', portRes.data)
 
-      if (httpRes && sslRes && portRes) {
+      const httpRecommendation = parsePoints(httpRes.data.results.response)
+      const sslRecommendation = parsePoints(sslRes.data.results.response)
+      const portRecommendation = parsePoints(portRes.data.results.response)
+
+      if (httpRes) {
+        // if (httpRes && sslRes && portRes) {
         const resultsArray = [
-          { ...httpRes.data.results, type: 'HTTP' },
-          { ...sslRes.data.results, type: 'SSL' },
-          { ...portRes.data.results, type: 'PORT' },
+          httpRecommendation,
+          sslRecommendation,
+          portRecommendation,
         ]
 
         setChatgtpResult(resultsArray)
@@ -126,7 +130,8 @@ const ChatBot = ({
     httpResponse,
     portResponse,
   )
-  // chatgtpResult && console.log('GPT DATA HERE>>>>>x', chatgtpResult)
+  chatgtpResult &&
+    console.log('GPT DATA HERE>>>>>x', chatgtpResult.httpRecommendation)
 
   return (
     <div className="" style={{ flex: '1 1 auto' }}>
@@ -138,25 +143,37 @@ const ChatBot = ({
                 chatgtpResult.map((recommendation, index) => (
                   <div key={index}>
                     <ResultOutput
-                      recommendation={recommendation.response}
+                      recommendation={recommendation}
                       chatBot={true}
-                      type={recommendation.type}
+                      // type={recommendation.type}
                     />
                   </div>
                 ))}
 
-              {/* <p className="text-base text-indigo-100 md:text-lg">
-                  {chatgtpResult && chatgtpResult.response}
-                </p> */}
+              {/* <ul className="list-none p-0">
+                {chatgtpResult.map((item, index) => (
+                  <li key={index} className="mb-4 p-4 bg-gray-100 rounded-lg">
+                    <span className="text-lg font-medium text-gray-900">
+                      {item.type}: {item.point}
+                    </span>
+                  </li>
+                ))}
+              </ul> */}
+
+              {/* <ul>
+                <li>
+                  <pre>{JSON.stringify(chatgtpResult, null, 2)}</pre>
+                </li>
+              </ul> */}
             </div>
 
             {loading ? (
-              <>
+              <div className="flex flex-col items-center justify-center">
                 <CircularProgress className="text-white" />
                 <h4 className="mt-2 text-indigo-100 font-lg">
                   Getting recommendations ...
                 </h4>
-              </>
+              </div>
             ) : (
               <></>
             )}

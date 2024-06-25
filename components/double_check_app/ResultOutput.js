@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import Link from 'next/link'
-import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip'
+import Tooltip from './Tooltip'
 
 const ResultOutput = ({
   color,
@@ -50,23 +50,29 @@ const ResultOutput = ({
               <ul className="text-gray-800">
                 <li>
                   <b>Issuer Name</b> : {urlResults.sslResponse.issuer_name}
+                  <Tooltip description="This is the Content-Type of the HTTP response." />
                 </li>
                 <li>
                   <b>Issuer Organization</b> :{' '}
                   {urlResults.sslResponse.issuer_org}
+                  <Tooltip description="This is the Content-Type of the HTTP response." />
                 </li>
                 <li>
                   <b>Validity Day Left</b> : {urlResults.sslResponse.days_left}
+                  <Tooltip description="This is the Content-Type of the HTTP response." />
                 </li>
                 <li>
                   <b>Subject Name</b> : {urlResults.sslResponse.subject_name}
+                  <Tooltip description="This is the Content-Type of the HTTP response." />
                 </li>
                 <li>
                   <b>Subject Alternative Names</b> :{' '}
                   {urlResults.sslResponse.subject_alt_names}
+                  <Tooltip description="This is the Content-Type of the HTTP response." />
                 </li>
                 <li>
                   <b>Algorithm</b> : {urlResults.sslResponse.algorithm}
+                  <Tooltip description="This is the Content-Type of the HTTP response." />
                 </li>
               </ul>
             </>
@@ -80,45 +86,36 @@ const ResultOutput = ({
                 <li>
                   <b>Content-Type</b> :{' '}
                   {urlResults.httpResponse['Content-Type']}
-                  <Tooltip message="Details wdawdawdwdwdaw" position="right">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </Tooltip>
+                  <Tooltip description="Specifies the media type of the resource (e.g., text/html, application/json). This header informs the client about the type of content it is going to receive, so it can handle it appropriately." />
                 </li>
                 <li>
                   <b>Server</b> : {urlResults.httpResponse.server}
+                  <Tooltip description="This is the Content-Type of the HTTP response." />
                 </li>
                 <li>
                   <b>Access-Control-Allow-Origin</b> :{' '}
                   {urlResults.httpResponse['access-control-allow-origin']}
+                  <Tooltip description="This is the Content-Type of the HTTP response." />
                 </li>
                 <li>
                   <b>Strict-Transport-Security</b> :{' '}
                   {urlResults.httpResponse['strict-transport-security']}
+                  <Tooltip description="This is the Content-Type of the HTTP response." />
                 </li>
                 <li>
                   <b>X-Content-Type-Options</b> :{' '}
                   {urlResults.httpResponse['x-content-type-options']}
+                  <Tooltip description="This is the Content-Type of the HTTP response." />
                 </li>
                 <li>
                   <b>X-Frame-Options</b> :{' '}
                   {urlResults.httpResponse['x-frame-options']}
+                  <Tooltip description="This is the Content-Type of the HTTP response." />
                 </li>
                 <li>
                   <b>X-XSS-Protection</b> :{' '}
                   {urlResults.httpResponse['x-xss-protection']}
+                  <Tooltip description="This is the Content-Type of the HTTP response." />
                 </li>
               </ul>
             </>
@@ -128,6 +125,9 @@ const ResultOutput = ({
               <h3 className="text-gray-800 text-xl font-bold mb-2">
                 <React.Fragment>WEB CRAWL RESULTS</React.Fragment>
               </h3>
+              <h4 className="text-gray-800 ">
+                Do any of these pages of images contain private information?
+              </h4>
               <ul className="text-gray-800">
                 <li>
                   <b>Pages</b> :{' '}
@@ -179,12 +179,15 @@ const ResultOutput = ({
                 <ul key={index} className="text-gray-800">
                   <li>
                     <b>Port ID</b> : {port.port_id}
+                    <Tooltip description="This is the Content-Type of the HTTP response." />
                   </li>
                   <li>
                     <b>State</b> : {port.state}
+                    <Tooltip description="This is the Content-Type of the HTTP response." />
                   </li>
                   <li>
                     <b>Service</b> : {port.service}
+                    <Tooltip description="This is the Content-Type of the HTTP response." />
                   </li>
                 </ul>
               ))}
@@ -197,9 +200,13 @@ const ResultOutput = ({
                   <h3 className="text-gray-800 text-xl font-bold mb-2">
                     <React.Fragment>{type} Recommendations</React.Fragment>
                   </h3>
-                  <ul className="text-gray-800">
-                    <li>{recommendation}</li>
-                  </ul>
+                  {recommendation.map((point, index) => (
+                    <div key={index}>
+                      <ul className="text-gray-800">
+                        <li>{point}</li>
+                      </ul>
+                    </div>
+                  ))}
                 </>
               )}
             </>

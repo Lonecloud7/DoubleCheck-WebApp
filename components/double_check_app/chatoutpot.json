@@ -1,0 +1,48 @@
+[
+  [
+    ["HTTP Recommendation"],
+    "1. Content-Type: A\nIt's well-defined and has the correct format with the MIME type and character set. No action required.",
+    "2. Accept-ranges: B\nIt's well-defined and provides beneficial functionality but may expose the server to potential DoS attacks. Contact server admin if there are performance concerns.",
+    "3. Access-control-allow-origin: B\nIt's currently set to all (*) which may expose the site to cross-site request forgery (CSRF). A user should definitely contact the server admin to limit access.",
+    "4. Age: A\nWell-defined, provides cached content age. No action required.",
+    "5. Cache-status: A\nReports cache status correctly. No action required.",
+    "6. Content-security-policy-report-only: C\nCurrently in report-only mode, potentially risky for live websites. Contact server admin to enforce the policy.",
+    "7. Cross-origin-opener-policy: B\nAllows popups from the same origin, which might not be necessary for all websites. Contact server admin for review and potential change.",
+    "8. Cross-origin-resource-policy: B\nAllows all origins; This might be a potential risk. Recommend contacting a server admin to only allow trusted origins.",
+    "9. Etag: A\nWell-defined and helps with cache validation. No action required.",
+    "10. Expires: D\nThe website's expiration date is far in the future. Request the server admin to set a more reasonable expiry date.",
+    "11. Last-modified: C\nIt provides an unnecessary detail that might expose sensitive information. The server admin should be contacted to remove it.",
+    "12. Link: B\nPreconnecting to fonts could potentially reveal information about the loading of page resources. Server admin to review this decision.",
+    "13. Report-to: A  \nWell-defined and provides a useful tool for debugging. No action required.",
+    "14. Server: D  \nReveals the server type (Netlify) which could be a security risk if vulnerabilities in this server type are known. Contact server admin to disable this field.",
+    "15. Strict-transport-security: A\nEnsures that the website can only be accessed over secure connections. No action required.",
+    "16. Timing-allow-origin: C\nIt allows timing information to be shared with all origins, which can be risky. Contact server admin to only allow trusted origins.",
+    "17. Vary: A\nSets which headers determine whether a cached response can be used. No action required.",
+    "18. X-content-type-options: A\nPrevents MIME Type sniffing. No action needed.",
+    "19. X-frame-options: B\nPrevents clickjacking attacks but contains 'SAMEORIGIN' which could still present risks. Contact server admin for a review.",
+    "20. X-nf-request-id: C\nSeemingly arbitrary and it exposes unnecessary information. Contact the server admin to hide this information.",
+    "21. X-xss-protection: F\nIt's set to \"0\", disabling XSS protection. This is a critical issue and the server admin should definitely be contacted to fix it. This might possibly be a misconfiguration rather than an intended setting."
+  ]
+]
+
+give me a brief description of these
+
+http headers:
+Content-Type
+Server 
+Access-Control-Allow-Origin
+Strict-Transport-Security
+X-Content-Type-Options
+X-Frame-Options 
+X-XSS-Protection
+ssl:
+Issuer Name
+Issuer Organization
+Validity Day Left
+Subject Name
+Subject Alternative Names
+Algorithm
+port:
+Port ID
+State 
+Service 
