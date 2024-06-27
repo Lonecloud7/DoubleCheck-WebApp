@@ -25,24 +25,3 @@
   ]
 ]
 
-give me a brief description of these
-
-http headers:
-Content-Type
-Server 
-Access-Control-Allow-Origin
-Strict-Transport-Security
-X-Content-Type-Options
-X-Frame-Options 
-X-XSS-Protection
-ssl:
-Issuer Name
-Issuer Organization
-Validity Day Left
-Subject Name
-Subject Alternative Names
-Algorithm
-port:
-Port ID
-State 
-Service 

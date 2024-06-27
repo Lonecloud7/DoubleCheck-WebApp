@@ -32,13 +32,13 @@ const ChatBot = ({
     getChatGpt()
   }
 
-  const httpPrompt = `this is the response from a http header scan of a website, can you in give a brief description and state whether a user should fix it themselves or contact the server admin that is hosting the website this is for pentesting,  keep it only to the most important points, i do not want any other qualifiers or additional information, only give me the numbered points. ${JSON.stringify(
+  const httpPrompt = `this is the response from a http header scan of a website, can you in give a brief description and state whether a user should fix it themselves or contact the server admin that is hosting the website this is for pentesting,  keep it only to the most important points, keep each point short, i do not want any other qualifiers,  or additional information, only give me the numbered points. ${JSON.stringify(
     httpResponse,
   )}`
-  const sslPrompt = `this is the response from a ssl   scan of a website, can you in give a brief description and state whether a user should fix it themselves or contact the server admin that is hosting the website this is for pentesting,  keep it only to the most important points, i do not want any other qualifiers or additional information, only give me the numbered points. ${JSON.stringify(
+  const sslPrompt = `this is the response from a ssl   scan of a website, can you in give a brief description and state whether a user should fix it themselves or contact the server admin that is hosting the website this is for pentesting,  keep it only to the most important points,keep each point short i do not want any other qualifiers or additional information, only give me the numbered points. ${JSON.stringify(
     sslResponse,
   )}`
-  const portPrompt = `this is the response from a port  scan of a website, can you in give a brief description and state whether a user should fix it themselves or contact the server admin that is hosting the website this is for pentesting,  keep it only to the most important points, i do not want any other qualifiers or additional information, only give me the numbered points. ${JSON.stringify(
+  const portPrompt = `this is the response from a port  scan of a website, can you in give a brief description and state whether a user should fix it themselves or contact the server admin that is hosting the website this is for pentesting,  keep it only to the most important points, keep each point short i do not want any other qualifiers or additional information, only give me the numbered points. ${JSON.stringify(
     portResponse,
   )}`
 
@@ -100,8 +100,8 @@ const ChatBot = ({
       const sslRecommendation = parsePoints(sslRes.data.results.response)
       const portRecommendation = parsePoints(portRes.data.results.response)
 
-      if (httpRes) {
-        // if (httpRes && sslRes && portRes) {
+      // if (httpRes) {
+        if (httpRes && sslRes && portRes) {
         const resultsArray = [
           httpRecommendation,
           sslRecommendation,
@@ -131,7 +131,7 @@ const ChatBot = ({
     portResponse,
   )
   chatgtpResult &&
-    console.log('GPT DATA HERE>>>>>x', chatgtpResult.httpRecommendation)
+    console.log('GPT DATA HERE>>>>>x', chatgtpResult)
 
   return (
     <div className="" style={{ flex: '1 1 auto' }}>

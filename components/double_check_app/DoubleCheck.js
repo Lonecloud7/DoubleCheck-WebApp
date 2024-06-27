@@ -15,7 +15,7 @@ const DoubleCheck = () => {
   // const router = useRouter()
   const [tab, setTab] = useState(1)
   // const [urlResults, setUrlResults] = useState(sampleResponse.httpResponse)
-  const [urlResults, setUrlResults] = useState(sampleResponse)
+  const [urlResults, setUrlResults] = useState()
   const [loading, setLoading] = useState(false)
   const [phoneResult, setPhoneResult] = useState(null)
   const [emailResult, setEmailResult] = useState(null)
@@ -40,11 +40,11 @@ const DoubleCheck = () => {
               setLoading={setLoading}
             />
             
-            {/* <ul>
+            <ul>
               <li>
                 <pre>{JSON.stringify(urlResults, null, 2)}</pre>
               </li>
-            </ul> */}
+            </ul>
           </motion.div>
         )}
         {tab === 2 && (

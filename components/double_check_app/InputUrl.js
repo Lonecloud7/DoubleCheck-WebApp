@@ -17,9 +17,9 @@ const InputURL = ({
   const [isChecked, setIsChecked] = useState(false)
 
   const nextSection = () => {
-    setTab(2)
+    // setTab(2)
 
-    // getUrlResult()
+    getUrlResult()
   }
 
   const handleChange = (e) => {
@@ -129,8 +129,8 @@ const InputURL = ({
   const validateUrl = (inputUrl) => {
     const urlWithoutProtocol = inputUrl.replace(/^https?:\/\//, '')
 
-    if (!urlWithoutProtocol.includes('.com')) {
-      throw new Error("URL must contain '.com'")
+    if (!urlWithoutProtocol.includes('.com','.io' )) {
+      throw new Error("URL must contain '.com'/ .io")
     }
 
     return urlWithoutProtocol
@@ -154,19 +154,20 @@ const InputURL = ({
       setLoading(true)
       setError('')
 
-      // const { data: dataHttp } = await axios.request(optionsHttpHeader)
+      const { data: dataHttp } = await axios.request(optionsHttpHeader)
       const { data: dataWebSpider } = await axios.request(optionsWebSpider)
       const { data: dataPort } = await axios.request(optionsPortScan)
       const { data: dataSsl } = await axios.request(optionsSslScan)
 
-      if (dataWebSpider && dataPort && dataSsl) {
-        // const httpResponse = dataHttp.results.optional
+      if (dataWebSpider && dataPort && dataSsl && dataHttp) {
+        const httpResponse = dataHttp.results.optional
         const sslResponse = dataSsl.results.certs[0]
         const WebCrawlResponse = dataWebSpider.results
         const portResponse = dataPort.results.hosts[0]
 
         setUrlResults({
-          ...sslResponse,
+          httpResponse,
+          sslResponse,
           portResponse,
           WebCrawlResponse,
         }),

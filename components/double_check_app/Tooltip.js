@@ -27,19 +27,19 @@ const Tooltip = ({ description }) => {
   }, [isTooltipVisible])
 
   return (
-    <span className="relative inline-block ml-2" ref={tooltipRef}>
-      <button
-        onClick={toggleTooltip}
-        className="text-gray-700 hover:text-blue-700 focus:outline-none hover:bg-gray-200 rounded-md"
-      >
-        ?
-      </button>
-      {isTooltipVisible && (
-        <div className="absolute left-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg p-2  z-50">
-          <p className="text-gray-700 text-sm">{description}</p>
-        </div>
-      )}
-    </span>
+    <span className="relative inline-block" ref={tooltipRef}>
+    <button
+      onClick={toggleTooltip}
+      className="ml-2 text-gray-700 hover:text-blue-700 focus:outline-none hover:bg-gray-200 rounded-md mr-2"
+    >
+      ?
+    </button>
+    {isTooltipVisible && (
+      <div className="absolute left-full top-0 ml-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg p-2 z-50">
+        <p className="text-gray-700 text-sm">{description}</p>
+      </div>
+    )}
+  </span>
   )
 }
 
