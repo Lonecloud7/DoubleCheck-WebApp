@@ -29,6 +29,9 @@ function Header() {
           <Link href="/doublecheck-page" className="mr-5 hover:text-gray-900">
             Double Check
           </Link>
+          <Link href="/terms_and_condition" className="mr-5 hover:text-gray-900">
+            Terms and Conditions
+          </Link>
           {/* <Link href="/results" className="mr-5 hover:text-gray-900">
            Results
           </Link>
