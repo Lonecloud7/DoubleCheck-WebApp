@@ -3,10 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Button from '@/components/button/Button'
 
-
 function Header() {
-
-
   return (
     <nav
       className="bg-white text-gray-600 body-font hidden md:block"
@@ -29,47 +26,13 @@ function Header() {
           <Link href="/doublecheck-page" className="mr-5 hover:text-gray-900">
             Double Check
           </Link>
-          <Link href="/terms_and_condition" className="mr-5 hover:text-gray-900">
-            Terms and Conditions
+          <Link
+            href="/terms_and_condition"
+            className="mr-5 hover:text-gray-900"
+          >
+            Terms of Service
           </Link>
-          {/* <Link href="/results" className="mr-5 hover:text-gray-900">
-           Results
-          </Link>
-          <Link href="/chatbot-page" className="mr-5 hover:text-gray-900">
-           ChatBot
-          </Link> */}
-          {/* <Link href="/" className="mr-5 hover:text-gray-900">
-           Terms and Services
-          </Link>
-          <Link href="/" className="mr-5 hover:text-gray-900">
-            Poem a Day
-          </Link>
-          <Link href="/challenge" className="mr-5 hover:text-gray-900">
-            Challenge
-          </Link>
-          <Link href="/how-to-play" className="mr-5 hover:text-gray-900">
-            How to play
-          </Link>
-          <Link href="/community-forum" className="mr-5 hover:text-gray-900">
-            Community
-          </Link>
-          {user && (
-            <Link
-              href="/logged-in-user-poems"
-              className="mr-5 hover:text-gray-900"
-            >
-              Poems by You
-            </Link>
-          )} */}
         </nav>
-        {/* {user ? (
-          <div>
-            <span className="py-2 px-8 text-lg">Let&apos;s Play, {user}</span>
-            <Button text={'Log Out'} onClick={unsetToken} />
-          </div>
-        ) : (
-          <Button text={'Log In'} link="/sign-in" />
-        )} */}
       </div>
     </nav>
   )
