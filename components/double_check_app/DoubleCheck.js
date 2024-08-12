@@ -40,11 +40,11 @@ const DoubleCheck = () => {
               setLoading={setLoading}
             />
             
-            <ul>
+            {/* <ul>
               <li>
                 <pre>{JSON.stringify(urlResults, null, 2)}</pre>
               </li>
-            </ul>
+            </ul> */}
           </motion.div>
         )}
         {tab === 2 && (

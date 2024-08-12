@@ -32,7 +32,7 @@ const Layout = ({
               : 'Double Check! Make sure your surface level security is protected!'
           }
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon2.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main
