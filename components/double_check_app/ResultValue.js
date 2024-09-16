@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { CircularProgress } from '@mui/material'
 
-import axios from 'axios'
+// import axios from 'axios'
 
 
 const ResultValue = ({showResult, percentage}) => {

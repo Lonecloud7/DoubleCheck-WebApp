@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ResultOutput from './ResultOutput'
-import ResultValue from './ResultValue'
+// import ResultValue from './ResultValue'
 import ChatBot from './ChatBot'
 
 import { AnimatePresence, motion } from 'framer-motion'

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
-import MainLayout from '@/components/layout/MainLayout'
+// import Image from 'next/image'
+// import MainLayout from '@/components/layout/MainLayout'
 
-import SecondaryButton from '../button/SecondaryButton'
-import BlackButton from '../button/BlackButton'
+// import SecondaryButton from '../button/SecondaryButton'
+// import BlackButton from '../button/BlackButton'
 import ResultOutput from './ResultOutput'
 
-import sampleResponse from './chatoutpot.json'
+// import sampleResponse from './chatoutpot.json'
 
 import { CircularProgress } from '@mui/material'
 

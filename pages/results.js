@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import MainLayout from '@/components/layout/MainLayout'
-import Link from 'next/link'
-import { CircularProgress } from '@mui/material'
-import CommunityPoems from '@/components/poems/CommunityPoems'
+// import Link from 'next/link'
+// import { CircularProgress } from '@mui/material'
+// import CommunityPoems from '@/components/poems/CommunityPoems'
 import { AnimatePresence, motion } from 'framer-motion'
-import ResultValue from '@/components/double_check_app/ResultValue'
-import ResultOutput from '@/components/double_check_app/ResultOutput'
+// import ResultValue from '@/components/double_check_app/ResultValue'
+// import ResultOutput from '@/components/double_check_app/ResultOutput'
 import ResultsComponent from '@/components/double_check_app/Results'
 
 
